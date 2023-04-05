@@ -1,3 +1,77 @@
-<a routerLink="">Home</a> | <a routerLink="products">Products</a> |
-<a routerLink="baskets">Basket</a> | <a routerLink="admin">Admin</a>
+<div class="container-fluid"></div>
+
 <router-outlet></router-outlet>
+
+<div class="container-fluid">
+  <div class="row justify-content-md-center">
+    <div class="col"></div>
+    <div class="col-xl-10">
+      <nav class="navbar navbar-expand-lg bg-light ml-auto, mb-lg-0, me-2 p-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" routerLink="">TİCARET</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse d-flex"
+            id="navbarSupportedContent"
+          >
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" routerLink="" aria-current="page"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  routerLink="products"
+                  >Products</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  routerLink="baskets"
+                  >Basket</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  routerLink="admin"
+                  >Admin</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="col"></div>
+  </div>
+
+<div class="row justify-content-md-center">
+  <div class="col"></div>
+  <div class="col-xl-10">
+   <router-outlet></router-outlet>
+  </div>
+  <div class="col"></div>
+</div>
+
+
+
+
+</div>
