@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay } from 'rxjs';
+
 declare var alertify: any;
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AlertifyService {
 
   // message( message: string, messageType: MessageType, position: Position,delay: number = 3)
   message(message:string,options:Partial<AlertifyOptions>){
-    alertify.set('notifier', 'position', delay);
+    alertify.set('notifier', 'position', options.delay);
     alertify.set('notifier', 'position', options.position);
     alertify[options.messageType](message);
   }
