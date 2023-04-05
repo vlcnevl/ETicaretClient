@@ -9,7 +9,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,ProductsModule,OrdersModule,ProductsModule,DashboardModule
+    CommonModule,ProductsModule,OrdersModule,DashboardModule
   ]
 })
 export class ComponentsModule { }
