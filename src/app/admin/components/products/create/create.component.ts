@@ -1,6 +1,5 @@
 import { ProductService } from './../../../../services/common/models/product.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CreateProduct } from 'src/app/contracts/product/create_product';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -30,6 +29,8 @@ export class CreateComponent extends BaseComponent {
         messageType: MessageType.Success,
         position:Position.TopRight
       })
+    },message=>{
+        this.alertify.message(message,{messageType:MessageType.Error,position:Position.TopRight});
     });
   }
 }
