@@ -1,0 +1,42 @@
+ <!-- <form class="create-form">
+  <mat-form-field class="create-full-width">
+    <mat-label>Product Name</mat-label>
+    <input #txtName matInput placeholder="Computer...">
+  </mat-form-field>
+  <mat-form-field class="create-full-width">
+    <mat-label>Stock</mat-label>
+    <input #txtStock matInput type="number" min="0" placeholder="Stock...">
+  </mat-form-field>
+  <mat-form-field class="create-full-width">
+    <mat-label>Price</mat-label>
+    <input #txtPrice matInput type="number" min="0" placeholder="Price...">
+  </mat-form-field>
+  <mat-form-field class="create-full-width">
+    <mat-label>Description</mat-label>
+    <input #txtDescription matInput placeholder="Description...">
+  </mat-form-field>
+
+  <button (click)="create(txtName,txtStock,txtPrice,txtDescription)" mat-raised-button color="primary">Create Product</button>
+</form> -->
+
+
+<div class="create-form">
+ <mat-form-field appearance="fill" class="create-full-width">
+  <mat-label>Name</mat-label>
+  <input matInput #txtName>
+</mat-form-field>
+<mat-form-field appearance="fill" class="create-full-width">
+  <mat-label>Stock</mat-label>
+  <input matInput type="number" min="0" value="0" #txtStock>
+</mat-form-field>
+<mat-form-field appearance="fill" class="create-full-width">
+  <mat-label>Price</mat-label>
+  <input matInput type="number" min="0" value="0" #txtPrice>
+</mat-form-field>
+<mat-form-field appearance="fill" class="create-full-width">
+  <mat-label>Description</mat-label>
+  <input matInput #txtDescription>
+</mat-form-field>
+
+<button mat-raised-button class="btn" color="primary" (click)="create(txtName,txtStock,txtPrice,txtDescription)">Create Product</button>
+</div>

@@ -2,15 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products.component';
 import { RouterModule } from '@angular/router';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { CreateComponent } from './create/create.component';
+import { ListComponent } from './list/list.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
 
 
 
 @NgModule({
   declarations: [
-    ProductsComponent
+    ProductsComponent,
+    CreateComponent,
+    ListComponent
   ],
   imports: [
-    CommonModule,RouterModule.forChild([{path:"",component:ProductsComponent}])
+    CommonModule,RouterModule.forChild([{path:"",component:ProductsComponent}]),
+    MatSidenavModule,MatInputModule,MatButtonModule,MatTableModule
   ]
 })
 export class ProductsModule { }

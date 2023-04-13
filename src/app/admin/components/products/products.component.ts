@@ -1,8 +1,6 @@
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component } from '@angular/core';
-import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
-import { HttpClientService } from 'src/app/services/common/http-client.service';
-import { Product } from 'src/app/contracts/product';
+import { BaseComponent } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-products',
@@ -10,16 +8,8 @@ import { Product } from 'src/app/contracts/product';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent extends BaseComponent {
-  constructor(
-    spinner: NgxSpinnerService,
-    private httpClientService: HttpClientService
-  ) {
+  constructor(spinner: NgxSpinnerService) {
     super(spinner);
   }
-  ngOnInit(): void {
-    // this.showSpinner(SpinnerType.BallNewton);
-
-    this.httpClientService.get<Product[]>({controller:"products"}).subscribe(data=> console.log(data[0].name));
-
-  }
+  ngOnInit(): void {}
 }
