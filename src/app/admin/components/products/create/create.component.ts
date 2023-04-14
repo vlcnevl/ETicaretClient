@@ -1,5 +1,5 @@
 import { ProductService } from './../../../../services/common/models/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CreateProduct } from 'src/app/contracts/product/create_product';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -15,6 +15,9 @@ export class CreateComponent extends BaseComponent {
   constructor(spinner:NgxSpinnerService, private productService:ProductService,private alertify:AlertifyService) {
     super(spinner);
    }
+
+  @Output() createdProduct:EventEmitter<CreateProduct> = new EventEmitter();
+
   create(name:HTMLInputElement,stock:HTMLInputElement,price:HTMLInputElement,description:HTMLInputElement){
     this.showSpinner(SpinnerType.BallFall);
    const product:CreateProduct = new CreateProduct();
@@ -29,6 +32,7 @@ export class CreateComponent extends BaseComponent {
         messageType: MessageType.Success,
         position:Position.TopRight
       })
+      this.createdProduct.emit(product);
     },message=>{
         this.alertify.message(message,{messageType:MessageType.Error,position:Position.TopRight});
     });
