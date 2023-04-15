@@ -12,6 +12,8 @@ import {
   Position,
 } from 'src/app/services/admin/alertify.service';
 
+
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -26,7 +28,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     super(spinner);
   }
 
-  displayedColumns: string[] = ['name','stock','price','description','createdDate','updatedDate'];
+  displayedColumns: string[] = ['name','stock','price','description','createdDate','updatedDate','update','delete'];
   dataSource: MatTableDataSource<ListProduct> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -55,5 +57,17 @@ export class ListComponent extends BaseComponent implements OnInit {
   async pageChanged(){
     await this.getProducts()
   }
+
+
+
+
+  // delete(id:string,event)
+  // {
+  //   const button:HTMLButtonElement =event.srcElement;
+
+  //  $(button.parentElement.parentElement.parentElement).fadeOut(1000); //listede satırı sildik
+
+  // }
+
 
 }

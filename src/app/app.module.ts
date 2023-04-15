@@ -23,7 +23,6 @@ import { HttpClientModule } from '@angular/common/http';
     ToastrModule.forRoot(),
     NgxSpinnerModule,
     HttpClientModule
-
   ],
   providers: [
     {provide:"baseUrl",useValue:"https://localhost:7162/api",multi:true}
