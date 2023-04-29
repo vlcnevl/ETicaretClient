@@ -7,6 +7,8 @@ import { HttpClientService } from '../http-client.service';
 import { AlertifyService, MessageType, Position } from '../../admin/alertify.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FileUploadDialogComponent,FileUploadState } from 'src/app/dialogs/file-upload-dialog/file-upload-dialog.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-file-upload',
@@ -15,7 +17,7 @@ import { FileUploadDialogComponent,FileUploadState } from 'src/app/dialogs/file-
 })
 export class FileUploadComponent {
 
-constructor(private httpClientService:HttpClientService,private alertifyService:AlertifyService,private customToastrService:CustomToastrService,private dialog:MatDialog,private dialogService:DialogService) {}
+constructor(private httpClientService:HttpClientService,private alertifyService:AlertifyService,private customToastrService:CustomToastrService,private dialog:MatDialog,private dialogService:DialogService,private spinner:NgxSpinnerService) {}
 
   @Input() options:Partial<FileUploadOptions>;
   public files: NgxFileDropEntry[];
@@ -36,13 +38,14 @@ constructor(private httpClientService:HttpClientService,private alertifyService:
         componentType:FileUploadDialogComponent,
         data:FileUploadState.Yes,
         afterClosed:()=>{
+          this.spinner.show(SpinnerType.SquareJellyBox);
           this.httpClientService.post(
             {controller:this.options.controller,
               action:this.options.action,
               queryString:this.options.queryString,
               headers: new HttpHeaders({"responseType":"blob"})
            },fileData).subscribe(data => {
-
+            this.spinner.hide(SpinnerType.SquareJellyBox);
             const message ="dosyalar başarıyla yüklenmiştir.";
 
             if(this.options.isAdminPage)
@@ -64,6 +67,7 @@ constructor(private httpClientService:HttpClientService,private alertifyService:
               {
                 this.customToastrService.message(message,"success",{messageType:ToastrMessageType.Error,position:ToastrPosition.TopRight})
               }
+              this.spinner.hide(SpinnerType.SquareJellyBox);
 
            });
             /*
