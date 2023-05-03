@@ -58,7 +58,8 @@ constructor(private httpClientService:HttpClientService,private alertifyService:
               }
            },(error:HttpErrorResponse) =>
            {
-            const message ="dosyalar yüklenirken hata oluştu.";
+             const message ="dosyalar yüklenirken hata oluştu.";
+
             if(this.options.isAdminPage)
               {
                 this.alertifyService.message(message,{messageType:MessageType.Error,position:Position.TopRight});
