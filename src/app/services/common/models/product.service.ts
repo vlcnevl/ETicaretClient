@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ListProduct } from 'src/app/contracts/product/list_product';
 import { Observable, firstValueFrom } from 'rxjs';
+import { ListProductImage } from 'src/app/contracts/product/list_product_image';
 
 @Injectable({
   providedIn: 'root',
@@ -11,38 +12,71 @@ import { Observable, firstValueFrom } from 'rxjs';
 export class ProductService {
   constructor(private httpClientService: HttpClientService) {}
 
-  create(product: CreateProduct,successCalback?: () => void,errorCallback?: (message:string) => void) {
-    this.httpClientService.post({ controller: 'products' }, product).subscribe(result => {successCalback(); },
+  create(
+    product: CreateProduct,
+    successCalback?: () => void,
+    errorCallback?: (message: string) => void
+  ) {
+    this.httpClientService.post({ controller: 'products' }, product).subscribe(
+      (result) => {
+        successCalback();
+      },
       (errorResponse: HttpErrorResponse) => {
-        const _error:Array<{key:string,value:Array<string>}>  = errorResponse.error;  // kendi özel veri tipimizi olusturduk hata koduna karsı hata mesajlarını çektik
-        let message ="";
-          debugger;
-        _error.forEach((v,index)=>{
-          v.value.forEach((_v,index)=>{
+        const _error: Array<{ key: string; value: Array<string> }> =
+          errorResponse.error; // kendi özel veri tipimizi olusturduk hata koduna karsı hata mesajlarını çektik
+        let message = '';
+        debugger;
+        _error.forEach((v, index) => {
+          v.value.forEach((_v, index) => {
             message += `${_v} <br>`;
-          })
-        })
+          });
+        });
         errorCallback(message);
       }
     );
   }
 
- async read(page:number = 0,size:number = 5, successCalback?:()=> void ,errorCallback?:(message:string)=> void) : Promise<{totalCount:number; products:ListProduct[]}>
-  {
-    const data: Promise<{totalCount:number; products:ListProduct[]}> = this.httpClientService.get<{totalCount:number; products:ListProduct[]}>
-    ({
-      controller:"products",
-      queryString:`page=${page}&size=${size}`
-    }).toPromise();
+  async read(
+    page: number = 0,
+    size: number = 5,
+    successCalback?: () => void,
+    errorCallback?: (message: string) => void
+  ): Promise<{ totalCount: number; products: ListProduct[] }> {
+    const data: Promise<{ totalCount: number; products: ListProduct[] }> =
+      this.httpClientService
+        .get<{ totalCount: number; products: ListProduct[] }>({
+          controller: 'products',
+          queryString: `page=${page}&size=${size}`,
+        })
+        .toPromise();
 
-    data.then(d => successCalback()).catch((httpError:HttpErrorResponse)=> { errorCallback(httpError.message)});
+    data
+      .then((d) => successCalback())
+      .catch((httpError: HttpErrorResponse) => {
+        errorCallback(httpError.message);
+      });
     return await data;
   }
 
-  async delete(id:string)
-  {
-   const deleteObservable:Observable<any> = this.httpClientService.delete<any>({controller:"products"},id);
-   await firstValueFrom(deleteObservable);
+  async delete(id: string) {
+    const deleteObservable: Observable<any> =
+      this.httpClientService.delete<any>({ controller: 'products' }, id);
+    await firstValueFrom(deleteObservable);
   }
+
+  async readImage(id: string,successCalback?: () => void): Promise<ListProductImage[]> {
+    const getObservable: Observable<ListProductImage[]> =
+      this.httpClientService.get<ListProductImage[]>(
+        { action: 'getproductimages', controller: 'products' },id);
+
+    const images: ListProductImage[] = await firstValueFrom(getObservable);
+    successCalback();
+    return images;
+  }
+
+  async deleteImage(productId:string,imageId:string){
+
+  }
+
 
 }

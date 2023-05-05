@@ -66,7 +66,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     this.dialogService.openDialog({
       componentType:SelectProductImageDialogComponent,
       data:id, // hangi ürüne ekleme yaptığımızı anlamak için gönderdik.
-      options:{width:"900px"}
+      options:{width:"1000px"}
     })
   }
 
