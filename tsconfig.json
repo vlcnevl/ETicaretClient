@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false, // sıkı kontrol kaldırıldı
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false, //reactive formda validasyonda hata vermesini sağlıyordu
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,

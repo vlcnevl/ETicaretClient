@@ -12,7 +12,6 @@ export class ProductsComponent extends BaseComponent {
     super(spinner);
   }
   ngOnInit(): void {
-    this.showSpinner(SpinnerType.BallNewton)
   }
 
 }

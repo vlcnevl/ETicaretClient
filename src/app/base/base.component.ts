@@ -7,7 +7,7 @@ constructor(private spinner:NgxSpinnerService) {}
   {
     this.spinner.show(spinnerType);
 
-    setTimeout(() => this.hideSpinner(spinnerType), 1000);
+     setTimeout(() => this.hideSpinner(spinnerType), 1000);
 
   }
 

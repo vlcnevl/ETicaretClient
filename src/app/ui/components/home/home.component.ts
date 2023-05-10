@@ -12,7 +12,6 @@ export class HomeComponent extends BaseComponent {
     super(spinner);
   }
   ngOnInit(): void {
-    this.showSpinner(SpinnerType.BallNewton)
   }
 
 }
