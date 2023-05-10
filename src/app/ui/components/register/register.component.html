@@ -32,9 +32,9 @@
   <div class="form-group mt-3 mb-3">
     <label for="password">Confirm Password</label>
     <input formControlName="confirmPassword" id="confirmPassword" type="password" class="form-control"  placeholder="confirm password" [ngClass]="{'is-invalid': submitted && component.confirmPassword.errors}">
-    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.confirmPassword.errors.required">Şifre tekrar alanı boş geçilemez!</small>
-    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.confirmPassword.errors.minlength || component.confirmPassword.errors.maxlength)">Lütfen şifrenizi 3 ile 50 karakter arası giriniz!</small>
-    <small  style="color: red;" *ngIf="form.hasError('notSame')">Şifreler eşleşmiyor!</small>
+     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.confirmPassword.errors.required">Şifre tekrar alanı boş geçilemez!</small>
+   <!-- <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.confirmPassword.errors.minlength || component.confirmPassword.errors.maxlength)">Lütfen şifrenizi 3 ile 50 karakter arası giriniz!</small> -->
+    <small  style="color: red;" *ngIf="submitted && form.hasError('notSame')">Şifreler eşleşmiyor!</small>
 
   </div>
   <div style="display: flex; justify-content: center;" class="mt-4">
