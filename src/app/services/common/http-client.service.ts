@@ -25,7 +25,7 @@ export class HttpClientService {
     return this.httpClient.get<T>(url,{headers:requestParameter.headers});
   }
 
-  post<T>(requestParameter:RequestParameters,body:Partial<T>)
+  post<T>(requestParameter:RequestParameters,body:Partial<T>) : Observable<T>
   {
     let url:string ="";
     if(requestParameter.fullEndpoint)
@@ -33,7 +33,7 @@ export class HttpClientService {
     else
       url = `${this.url(requestParameter)}${requestParameter.queryString ? `?${requestParameter.queryString}` : ""}`
 
-     return this.httpClient.post(url,body,{headers:requestParameter.headers});
+     return this.httpClient.post<T>(url,body,{headers:requestParameter.headers});
   }
 
   put<T>(requestParameter: RequestParameters,body:Partial<T>) : Observable<T>

@@ -7,19 +7,19 @@
     <label for="namesurname">Name & Surname</label>
     <input formControlName="nameSurname" id="namesurname" class="form-control" placeholder="name & surname" [ngClass]="{'is-invalid': submitted && component.nameSurname.errors}">
      <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.nameSurname.errors?.required">İsim soyisim alanı boş geçilemez!</small>
-     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.nameSurname.errors?.minlength || component.nameSurname.errors.maxlength)">Lütfen ad soyadı 3 ile 50 karakter arası giriniz!</small>
+     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.nameSurname.errors?.minlength || component.nameSurname.errors?.maxlength)">Lütfen ad soyadı 3 ile 50 karakter arası giriniz!</small>
     </div>
   <div class="form-group mt-3">
     <label for="username">Username</label>
     <input formControlName="username" id="username" type="email" class="form-control" placeholder="username" [ngClass]="{'is-invalid': submitted && component.username.errors}">
     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.username.errors?.required">Kullanıcı adı alanı boş geçilemez!</small>
-    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.username.errors?.minlength || component.username.errors.maxlength)">Lütfen kullanıcı adınızı 3 ile 50 karakter arası giriniz!</small>
+    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.username.errors?.minlength || component.username.errors?.maxlength)">Lütfen kullanıcı adınızı 3 ile 50 karakter arası giriniz!</small>
   </div>
   <div class="form-group mt-3">
     <label for="email">Email address</label>
     <input formControlName="email" id="email" type="email" class="form-control" placeholder="enter email" [ngClass]="{'is-invalid': submitted && component.email.errors}" >
     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.email.errors?.required">Email alanı boş geçilemez!</small>
-    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.email.errors?.minlength || component.email.errors.maxlength)">Lütfen emaili 3 ile 50 karakter arası giriniz!</small>
+    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.email.errors?.minlength || component.email.errors?.maxlength)">Lütfen emaili 3 ile 50 karakter arası giriniz!</small>
     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.email.errors?.email">Lütfen geçerli bir email adresi giriniz!</small>
 
   </div>
@@ -27,7 +27,7 @@
     <label for="password">Password</label>
     <input formControlName="password" id="password" type="password" class="form-control"  placeholder="password" [ngClass]="{'is-invalid': submitted && component.password.errors}">
     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.password.errors?.required">Şifre alanı boş geçilemez!</small>
-    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.password.errors?.minlength || component.password.errors.maxlength)">Lütfen şifrenizi 3 ile 50 karakter arası giriniz!</small>
+    <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && (component.password.errors?.minlength || component.password.errors?.maxlength)">Lütfen şifrenizi 3 ile 50 karakter arası giriniz!</small>
   </div>
   <div class="form-group mt-3 mb-3">
     <label for="password">Confirm Password</label>
