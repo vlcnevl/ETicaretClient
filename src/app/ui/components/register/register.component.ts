@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { User } from 'src/app/entities/User';
 
 @Component({
   selector: 'app-register',
@@ -34,7 +35,7 @@ export class RegisterComponent implements OnInit {
     return this.form.controls;
    }
 
-  onSubmit(data:any)
+  onSubmit(data:User)
   {
     console.log(data);
 
