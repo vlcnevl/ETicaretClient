@@ -1,18 +1,23 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
+import { UserService } from 'src/app/services/common/models/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  constructor(){}
+export class LoginComponent extends BaseComponent implements OnInit {
+  constructor(private userService:UserService,spinner:NgxSpinnerService){
+    super(spinner)
+  }
 
   form:FormGroup;
   ngOnInit(): void {
     this.form = new FormGroup({ // bu daha çok kullanılan versiyon
-      username:new FormControl("",Validators.required),
+      usernameOrEmail:new FormControl("",Validators.required),
       password:new FormControl("",Validators.required)
     });
   }
@@ -24,9 +29,10 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit(data:any)
+  async onSubmit(data:any)
   {
-    console.log();
+    this.showSpinner(SpinnerType.BallFall);
+    await this.userService.login(data.usernameOrEmail,data.password,()=>this.hideSpinner(SpinnerType.BallFall));
 
     this.submitted=true;
     if (this.form.invalid)

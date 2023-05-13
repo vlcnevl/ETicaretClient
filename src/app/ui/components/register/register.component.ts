@@ -1,5 +1,7 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { CreateUser } from 'src/app/contracts/user/create_user';
 import { User } from 'src/app/entities/User';
 import { UserService } from 'src/app/services/common/models/user.service';
@@ -12,9 +14,12 @@ import { CustomToastrService } from 'src/app/services/ui/custom-toastr.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent extends BaseComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder,private userService:UserService,private customToastrService:CustomToastrService) {}
+  constructor(private formBuilder:FormBuilder,private userService:UserService,private customToastrService:CustomToastrService,spinner:NgxSpinnerService)
+  {
+    super(spinner);
+  }
 
 
   form : FormGroup;
@@ -45,8 +50,8 @@ export class RegisterComponent implements OnInit {
     this.submitted=true;
     if (this.form.invalid)
     return;
-
-    const result:CreateUser =   await this.userService.create(user);
+    this.showSpinner(SpinnerType.BallNewton);
+    const result:CreateUser =   await this.userService.create(user,()=> this.hideSpinner(SpinnerType.BallNewton));
     if(result.succeded)
       this.customToastrService.message(result.message,"Kullanıcı kayıt Başarılı",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
     else

@@ -4,6 +4,7 @@ import { ProductsModule } from './products/products.module';
 import { HomeModule } from './home/home.module';
 import { BasketsModule } from './baskets/baskets.module';
 import { RegisterModule } from './register/register.module';
+import { LoginModule } from './login/login.module';
 
 
 
@@ -12,7 +13,7 @@ import { RegisterModule } from './register/register.module';
 
   ],
   imports: [
-    CommonModule,ProductsModule,HomeModule,BasketsModule,RegisterModule
+    CommonModule,ProductsModule,HomeModule,BasketsModule,RegisterModule,LoginModule
   ]
 })
 export class ComponentsModule { }
