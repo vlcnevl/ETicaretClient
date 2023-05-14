@@ -1,8 +1,9 @@
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { UserService } from 'src/app/services/common/models/user.service';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -10,15 +11,15 @@ import { UserService } from 'src/app/services/common/models/user.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
-  constructor(private userService:UserService,spinner:NgxSpinnerService){
+  constructor(private formBuilder:FormBuilder,private userService:UserService,spinner:NgxSpinnerService,private toastrService:CustomToastrService){
     super(spinner)
   }
 
   form:FormGroup;
   ngOnInit(): void {
-    this.form = new FormGroup({ // bu daha çok kullanılan versiyon
-      usernameOrEmail:new FormControl("",Validators.required),
-      password:new FormControl("",Validators.required)
+    this.form = this.formBuilder.group({ // bu daha çok kullanılan versiyon
+      usernameOrEmail: ["",[Validators.required,Validators.minLength(3)]],
+      password:["",[Validators.required]],
     });
   }
 
@@ -31,12 +32,24 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   async onSubmit(data:any)
   {
-    this.showSpinner(SpinnerType.BallFall);
-    await this.userService.login(data.usernameOrEmail,data.password,()=>this.hideSpinner(SpinnerType.BallFall));
-
     this.submitted=true;
     if (this.form.invalid)
     return;
+    this.showSpinner(SpinnerType.BallFall);
+    await this.userService.login(data.usernameOrEmail,data.password,
+      ()=>{this.hideSpinner(SpinnerType.BallFall),
+        this.toastrService.message(`Giriş başarılı. Hoşgeldin ${data.usernameOrEmail}`,"Giriş Başarılı",{messageType:ToastrMessageType.Success, position:ToastrPosition.TopRight});
+      },
+      ()=>
+      {
+        this.hideSpinner(SpinnerType.BallFall)
+        this.toastrService.message("Giriş başarısız.","Giriş Başarısız",{messageType:ToastrMessageType.Error, position:ToastrPosition.TopRight});
+
+      }
+    );
+
+
+
 
   }
 

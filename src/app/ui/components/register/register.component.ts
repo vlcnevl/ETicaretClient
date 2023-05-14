@@ -53,7 +53,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     this.showSpinner(SpinnerType.BallNewton);
     const result:CreateUser =   await this.userService.create(user,()=> this.hideSpinner(SpinnerType.BallNewton));
     if(result.succeded)
-      this.customToastrService.message(result.message,"Kullanıcı kayıt Başarılı",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
+      this.customToastrService.message(result.message,"Kullanıcı kayıt başarılı",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
     else
       this.customToastrService.message(result.message,"Kullanıcı kaydı başarısız",{messageType:ToastrMessageType.Error, position:ToastrPosition.TopRight})
   }
