@@ -48,15 +48,17 @@
                   class="nav-link active"
                   aria-current="page"
                   routerLink="admin"
+                  *ngIf="authService.isAuthenticated"
                   >Admin</a>
               </li>
             </ul>
 
-                <span class="nav-link justify-content-end  mr-sm-2 m-2">
+                <span class="nav-link justify-content-end  mr-sm-2 m-2" >
                   <a
                   class="nav-link active"
                   aria-current="page"
                   routerLink="login"
+                  *ngIf="!authService.isAuthenticated"
                   >Giriş Yap</a>
                 </span>
                 <span class="nav-link justify-content-end  mr-sm-2 m-2 ">
@@ -64,8 +66,16 @@
                   class="nav-link active"
                   aria-current="page"
                   routerLink="register"
+                  *ngIf="!authService.isAuthenticated"
                   >Kayıt Ol</a>
-
+                </span>
+                <span class="nav-link justify-content-end  mr-sm-2 m-2 ">
+                  <a
+                  class="nav-link active"
+                  style="color: red; cursor: pointer;"
+                  *ngIf="authService.isAuthenticated"
+                  (click)="logout()"
+                  >Çıkış Yap</a>
                 </span>
           </div>
         </div>
