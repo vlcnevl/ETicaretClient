@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './admin/layout/layout.component';
 import { HomeComponent } from './ui/components/home/home.component';
+import { AuthGuard } from './guards/common/auth.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DashboardComponent,
+        component: DashboardComponent,canActivate:[AuthGuard],
       },
       {
         path: 'customers',
@@ -20,23 +21,25 @@ const routes: Routes = [
           import('./admin/components/customers/customers.module').then(
             (module) => module.CustomersModule
           ), // admin/customers/... dan sonra gelecek şeyleri customers module içinde araması gerektiğini söyledik
-      },
+          canActivate:[AuthGuard],
+        },
       {
         path: 'products',
         loadChildren: () =>
           import('./admin/components/products/products.module').then(
             (module) => module.ProductsModule
-          ),
+          ),canActivate:[AuthGuard],
       },
       {
         path: 'orders',
         loadChildren: () =>
           import('./admin/components/orders/orders.module').then(
             (module) => module.OrdersModule
-          ),
+          ),canActivate:[AuthGuard],
       },
-    ],
+    ],canActivate:[AuthGuard],
   },
+
   { path: '', component: HomeComponent },
   {
     path: 'products',
