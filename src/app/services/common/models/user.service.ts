@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { CreateUser } from 'src/app/contracts/user/create_user';
 import { Token } from 'src/app/contracts/token/token';
 import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
+import { SocialUser } from '@abacritt/angularx-social-login';
 
 
 @Injectable({
@@ -35,6 +36,21 @@ export class UserService {
       successCallback();
      }
      else
+      errorCallback();
+  }
+
+
+  async googleLogin(user:SocialUser,successCallback?:()=> void,errorCallback?:()=>void):Promise<any>
+  {
+    const observable:Observable<SocialUser |TokenResponse> = this.httpClient.post<SocialUser | TokenResponse>({controller:"users",action:"googleLogin"},user);
+    const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
+
+    if(tokenResponse)
+    {
+      localStorage.setItem("accessToken",tokenResponse.token.accessToken);
+      successCallback();
+    }
+    else
       errorCallback();
   }
 

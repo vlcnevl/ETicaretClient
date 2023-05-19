@@ -10,10 +10,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
-
-
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleSigninButtonModule} from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider} from '@abacritt/angularx-social-login';
+import { LoginComponent } from './ui/components/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,10 +30,30 @@ import { JwtModule } from '@auth0/angular-jwt';
         tokenGetter:()=> localStorage.getItem("accessToken"), // bütün isteklerde headera tokeni yerleştirir.
         allowedDomains:["localhost:7162"] // sadece bu domaine tokeni yerlestir ve gönder.
       }
-    })
+    }),
+    SocialLoginModule,
+    ReactiveFormsModule,
+    GoogleSigninButtonModule
   ],
   providers: [
-    {provide:"baseUrl",useValue:"https://localhost:7162/api",multi:true}
+    {provide:"baseUrl",useValue:"https://localhost:7162/api",multi:true},
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '59853966872-m1d7fjkbsc1m887ldu8evnni7759726p.apps.googleusercontent.com'
+            )
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
 
   ],
   bootstrap: [AppComponent],

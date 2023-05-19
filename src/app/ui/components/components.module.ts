@@ -9,11 +9,9 @@ import { LoginModule } from './login/login.module';
 
 
 @NgModule({
-  declarations: [
-
-  ],
+  declarations: [],
   imports: [
-    CommonModule,ProductsModule,HomeModule,BasketsModule,RegisterModule,LoginModule
+    CommonModule,ProductsModule,HomeModule,BasketsModule,RegisterModule//,LoginModule
   ]
 })
 export class ComponentsModule { }

@@ -1,3 +1,4 @@
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { AuthService } from './../../../services/common/auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
@@ -13,8 +14,22 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
-  constructor(private formBuilder:FormBuilder,private userService:UserService,spinner:NgxSpinnerService,private toastrService:CustomToastrService,private authService:AuthService,private activatedRoute:ActivatedRoute,private router:Router){
+  constructor(private formBuilder:FormBuilder,private userService:UserService,spinner:NgxSpinnerService,private toastrService:CustomToastrService,private authService:AuthService,private activatedRoute:ActivatedRoute,private router:Router,private socialAuthService: SocialAuthService){
     super(spinner)
+    socialAuthService.authState.subscribe(async (user:SocialUser)=>{
+     // console.log(user);
+      this.showSpinner(SpinnerType.BallNewton);
+     await userService.googleLogin(user,()=>{
+        this.hideSpinner(SpinnerType.BallNewton)
+        this.toastrService.message(`Giriş başarılı. Hoşgeldin ${user.name}`,"Giriş Başarılı",{messageType:ToastrMessageType.Success, position:ToastrPosition.TopRight});
+        this.authService.identityCheck();
+      },()=>{
+        this.hideSpinner(SpinnerType.BallNewton)
+        this.toastrService.message("Giriş başarısız.","Giriş Başarısız",{messageType:ToastrMessageType.Error, position:ToastrPosition.TopRight});
+      })
+    })
+
+
   }
 
   form:FormGroup;
