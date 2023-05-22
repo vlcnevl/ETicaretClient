@@ -1,5 +1,6 @@
+import { AuthService } from './../../../services/common/models/auth.service';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-import { AuthService } from './../../../services/common/auth.service';
+import { CheckAuthService } from '../../../services/common/checkAuth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -14,15 +15,15 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
-  constructor(private formBuilder:FormBuilder,private userService:UserService,spinner:NgxSpinnerService,private toastrService:CustomToastrService,private authService:AuthService,private activatedRoute:ActivatedRoute,private router:Router,private socialAuthService: SocialAuthService){
+  constructor(private formBuilder:FormBuilder,private authService:AuthService,spinner:NgxSpinnerService,private toastrService:CustomToastrService,private checkAuthService:CheckAuthService,private activatedRoute:ActivatedRoute,private router:Router,private socialAuthService: SocialAuthService){
     super(spinner)
     socialAuthService.authState.subscribe(async (user:SocialUser)=>{
      // console.log(user);
       this.showSpinner(SpinnerType.BallNewton);
-     await userService.googleLogin(user,()=>{
+     await authService.googleLogin(user,()=>{
         this.hideSpinner(SpinnerType.BallNewton)
         this.toastrService.message(`Giriş başarılı. Hoşgeldin ${user.name}`,"Giriş Başarılı",{messageType:ToastrMessageType.Success, position:ToastrPosition.TopRight});
-        this.authService.identityCheck();
+        this.checkAuthService.identityCheck();
       },()=>{
         this.hideSpinner(SpinnerType.BallNewton)
         this.toastrService.message("Giriş başarısız.","Giriş Başarısız",{messageType:ToastrMessageType.Error, position:ToastrPosition.TopRight});
@@ -53,10 +54,10 @@ export class LoginComponent extends BaseComponent implements OnInit {
     if (this.form.invalid)
     return;
     this.showSpinner(SpinnerType.BallFall);
-    await this.userService.login(data.usernameOrEmail,data.password,
+    await this.authService.login(data.usernameOrEmail,data.password,
       ()=>{
         this.toastrService.message(`Giriş başarılı. Hoşgeldin ${data.usernameOrEmail}`,"Giriş Başarılı",{messageType:ToastrMessageType.Success, position:ToastrPosition.TopRight});
-        this.authService.identityCheck();
+        this.checkAuthService.identityCheck();
 
         this.activatedRoute.queryParams.subscribe(params=>{ // bizi bir yere girerken logine atıyorsa login yaptıktan sonra o sayfaya tekrar gönderir
          const returnUrl:string =  params["returnUrl"]

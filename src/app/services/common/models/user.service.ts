@@ -23,35 +23,4 @@ export class UserService {
     callBack();
     return createUser;
   }
-
-  async login(usernameOrEmail:string,password:string,successCallback?:()=>void,errorCallback?:()=>void) : Promise<any>
-  {  // anyde gönderebilirim token de alabilirim.
-     const observable:Observable<any | TokenResponse> = this.httpClient.post<any | TokenResponse>({controller:"users",action:"login"},{usernameOrEmail,password});
-     const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
-
-     if(tokenResponse)
-     {
-      localStorage.setItem("accessToken",tokenResponse.token.accessToken);
-     // localStorage.setItem("expiration",token.expiration.toString());
-      successCallback();
-     }
-     else
-      errorCallback();
-  }
-
-
-  async googleLogin(user:SocialUser,successCallback?:()=> void,errorCallback?:()=>void):Promise<any>
-  {
-    const observable:Observable<SocialUser |TokenResponse> = this.httpClient.post<SocialUser | TokenResponse>({controller:"users",action:"googleLogin"},user);
-    const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
-
-    if(tokenResponse)
-    {
-      localStorage.setItem("accessToken",tokenResponse.token.accessToken);
-      successCallback();
-    }
-    else
-      errorCallback();
-  }
-
 }

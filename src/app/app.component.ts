@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { AuthService } from './services/common/auth.service';
+import { CheckAuthService } from './services/common/checkAuth.service';
 import { Component } from '@angular/core';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 
@@ -12,14 +12,14 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from './servic
 export class AppComponent {
   title = 'ETicaretClient';
 
-  constructor(public authService:AuthService,private toastrService:CustomToastrService,private router:Router) {
-    authService.identityCheck();
+  constructor(public checkAuthService:CheckAuthService,private toastrService:CustomToastrService,private router:Router) {
+    checkAuthService.identityCheck();
   }
 
   logout()
   {
     localStorage.removeItem("accessToken");
-    this.authService.identityCheck();
+    this.checkAuthService.identityCheck();
     this.router.navigate([""])
     this.toastrService.message("Oturum Kapatıldı.","Oturum Kapatıldı.",{messageType:ToastrMessageType.Info,position:ToastrPosition.TopRight})
   }

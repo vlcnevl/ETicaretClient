@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class CheckAuthService {
 
   constructor(private jwtHelper:JwtHelperService) { }
 
