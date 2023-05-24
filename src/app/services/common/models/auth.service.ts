@@ -1,7 +1,7 @@
+import { TokenResponse } from './../../../contracts/token/tokenResponse';
 import { Observable, firstValueFrom } from 'rxjs';
 import { SocialUser } from '@abacritt/angularx-social-login';
 import { Injectable } from '@angular/core';
-import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
 import { HttpClientService } from '../http-client.service';
 
 @Injectable({
@@ -19,6 +19,7 @@ export class AuthService {
      if(tokenResponse)
      {
       localStorage.setItem("accessToken",tokenResponse.token.accessToken);
+      localStorage.setItem("refreshToken",tokenResponse.token.refreshToken);
      // localStorage.setItem("expiration",token.expiration.toString());
       successCallback();
      }
@@ -35,10 +36,29 @@ export class AuthService {
     if(tokenResponse)
     {
       localStorage.setItem("accessToken",tokenResponse.token.accessToken);
+      localStorage.setItem("refreshToken",tokenResponse.token.refreshToken);
       successCallback();
     }
     else
       errorCallback();
+  }
+
+
+  async refreshTokenLogin(refreshToken:string,successCallback?:()=> void,errorCallback?:()=> void) : Promise<any>
+  {
+    const observable:Observable<any | TokenResponse> = this.httpClient.post({controller:"auth",action:"refreshtokenlogin"},{refreshToken:refreshToken})
+
+    const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
+
+    if(tokenResponse)
+    {
+      localStorage.setItem("accessToken",tokenResponse.token.accessToken);
+      localStorage.setItem("refreshToken",tokenResponse.token.refreshToken);
+      successCallback();
+    }
+    else
+      errorCallback();
+
   }
 
 

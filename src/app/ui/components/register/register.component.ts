@@ -52,7 +52,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     return;
     this.showSpinner(SpinnerType.BallNewton);
     const result:CreateUser =   await this.userService.create(user);
-    debugger;
+
     if(result.succeded)
     {
       this.hideSpinner(SpinnerType.BallNewton)
