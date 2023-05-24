@@ -55,9 +55,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         }
       } as SocialAuthServiceConfig,
     },
-    {
-      provide: HTTP_INTERCEPTORS, useClass:HttpErrorHandlerInterceptorService,multi:true
-    }
+     {
+       provide: HTTP_INTERCEPTORS, useClass:HttpErrorHandlerInterceptorService,multi:true
+     }
 
   ],
   bootstrap: [AppComponent],

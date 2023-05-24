@@ -3,9 +3,6 @@ import { User } from 'src/app/entities/User';
 import { HttpClientService } from './../http-client.service';
 import { Injectable } from '@angular/core';
 import { CreateUser } from 'src/app/contracts/user/create_user';
-import { Token } from 'src/app/contracts/token/token';
-import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
-import { SocialUser } from '@abacritt/angularx-social-login';
 
 
 @Injectable({
@@ -15,12 +12,9 @@ export class UserService {
 
   constructor(private httpClient:HttpClientService) { }
 
- async create(user:User,callBack?:() => void) : Promise<CreateUser>
+ async create(user:User) : Promise<CreateUser>
   {//generic yapılanma . user nesnesini postta gönderdik. backendden cevap olarak farkli türden olan createuser nesnesi aldık.
-
-   const observable:Observable<User | CreateUser> = this.httpClient.post<User | CreateUser>({controller:"users"},user);
-   const createUser:CreateUser =  await firstValueFrom(observable) as CreateUser;
-    callBack();
-    return createUser;
+   const observable:Observable<CreateUser | User> = this.httpClient.post<CreateUser | User>({controller:"users"},user);
+    return await firstValueFrom(observable) as CreateUser;
   }
 }
