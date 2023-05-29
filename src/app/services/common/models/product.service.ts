@@ -36,19 +36,12 @@ export class ProductService {
     );
   }
 
-  async read(
-    page: number = 0,
-    size: number = 5,
-    successCalback?: () => void,
-    errorCallback?: (message: string) => void
-  ): Promise<{ totalCount: number; products: ListProduct[] }> {
+  async read(page: number = 0,size: number = 5,successCalback?: () => void,errorCallback?: (message: string) => void): Promise<{ totalCount: number; products: ListProduct[] }> {
     const data: Promise<{ totalCount: number; products: ListProduct[] }> =
-      this.httpClientService
-        .get<{ totalCount: number; products: ListProduct[] }>({
+      this.httpClientService.get<{ totalCount: number; products: ListProduct[] }>({
           controller: 'products',
           queryString: `page=${page}&size=${size}`,
-        })
-        .toPromise();
+        }).toPromise();
 
     data
       .then((d) => successCalback())
