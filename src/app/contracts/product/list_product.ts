@@ -1,3 +1,5 @@
+import { ListProductImage } from "./list_product_image";
+
 export class ListProduct {
   id:string;
   name:string;
@@ -6,4 +8,6 @@ export class ListProduct {
   stock:number;
   createdDate:Date;
   updatedDate:Date;
+  productImageFiles?:ListProductImage[];
+  imagePath:string; // vitrin resmi urlsi
 }

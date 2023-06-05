@@ -73,6 +73,13 @@ export class SelectProductImageDialogComponent
     });
   }
 
+  showcase(imageId:string)
+  {
+    this.spinner.show(SpinnerType.BallFall);
+    this.productService.changeShowcaseImage(imageId,this.data as string,()=>{this.spinner.hide(SpinnerType.BallFall)})
+  }
+
+
   @Output() options: Partial<FileUploadOptions> = {
     accept: '.png,.jpg,.jpeg ',
     controller: 'products',

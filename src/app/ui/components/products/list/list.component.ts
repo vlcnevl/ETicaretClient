@@ -2,6 +2,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ListProduct } from 'src/app/contracts/product/list_product';
 import { ProductService } from 'src/app/services/common/models/product.service';
+import { FileService } from 'src/app/services/common/models/file.service';
+import { BaseUrl } from 'src/app/contracts/baseUrl';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +12,7 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 })
 export class ListComponent implements OnInit{
 
-constructor(private productService:ProductService,private activatedRoute:ActivatedRoute) {}
+constructor(private productService:ProductService,private activatedRoute:ActivatedRoute,private fileService:FileService) {}
 //sayfalama değişkenleri  ...48,49,50,51,52,53...
  currentPageNo:number;
  totalProductCount:number;
@@ -20,12 +22,34 @@ constructor(private productService:ProductService,private activatedRoute:Activat
 
  products:ListProduct[];
 
-  ngOnInit() {
+ baseUrl:BaseUrl;
+
+ async ngOnInit() {
     this.activatedRoute.params.subscribe(async params => {
     this.currentPageNo = parseInt(params["pageNo"] ?? 1);
 
+    this.baseUrl = await this.fileService.getBaseStroageUrl();
+
     const data:{totalCount:number,products:ListProduct[]} = await this.productService.read(this.currentPageNo-1,this.pageSize,()=>{},error=>{});
     this.products = data.products;
+
+    this.products = this.products.map<ListProduct>(p=>{
+      const listProduct:ListProduct ={
+        id:p.id,
+        price:p.price,
+        stock:p.stock,
+        name:p.name,
+        createdDate:p.createdDate,
+        updatedDate:p.updatedDate,
+        description:p.description,
+        productImageFiles:p.productImageFiles,
+        imagePath: p.productImageFiles.length ? p.productImageFiles.find(p=>p.showcase).path : "", // vitrin resmini pathe alabilmek için mapledik.
+      };
+      return listProduct;
+    });
+
+
+
 
 
     // pagination islemleri önemli.
@@ -52,10 +76,6 @@ constructor(private productService:ProductService,private activatedRoute:Activat
         this.pageList.push(i);
       }
     }
-
-
-
-
   })
 
 
