@@ -12,6 +12,7 @@ import { LoginModule } from './login/login.module';
   declarations: [],
   imports: [
     CommonModule,ProductsModule,HomeModule,BasketsModule,RegisterModule//,LoginModule
-  ]
+  ],
+  exports:[BasketsModule] // app module de kullanılması için export ettik . baskets module de de componenti export ettik.
 })
 export class ComponentsModule { }

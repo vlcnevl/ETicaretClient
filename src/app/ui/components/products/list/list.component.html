@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row justify-content-md-center">
-    <div class="col"></div>
+    <div class="col-sm-1"></div>
     <div class="col-xl-10">
       <div class="card" style="width: 18rem; float: left; margin-top: 15px; margin-right: 15px;" *ngFor="let product of products">
         <img style="width: 260px; height: 250px;" class="card-img-top" *ngIf="!product.productImageFiles.length" src="../../../../../assets/box.jpg" alt="Card image cap">
@@ -9,11 +9,11 @@
           <h4 class="card-title">{{product.name}}</h4>
           <p class="card-text">{{product.description}}</p>
           <p class="card-text">{{product.price | currency:'₺'}}</p>
-          <a href="#" class="btn btn-secondary">Sepete Ekle</a>
+          <a (click)="addToBasket(product)" class="btn btn-secondary" >Sepete Ekle</a>
         </div>
       </div>
 
-    <div class="col"></div>
+    <div class="col-sm-1"></div>
   </div>
 
 

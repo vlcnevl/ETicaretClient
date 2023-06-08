@@ -1,18 +1,28 @@
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from './../../../../services/ui/custom-toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ListProduct } from 'src/app/contracts/product/list_product';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { FileService } from 'src/app/services/common/models/file.service';
 import { BaseUrl } from 'src/app/contracts/baseUrl';
+import { BasketService } from 'src/app/services/common/models/basket.service';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { CreateBasketItem } from 'src/app/contracts/basket/create_basket_item';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit{
+export class ListComponent extends BaseComponent implements OnInit{
 
-constructor(private productService:ProductService,private activatedRoute:ActivatedRoute,private fileService:FileService) {}
+constructor(private productService:ProductService,private activatedRoute:ActivatedRoute,private fileService:FileService,private basketService:BasketService, spinner:NgxSpinnerService,private toastrService:CustomToastrService)
+{
+  super(spinner)
+}
+
+
 //sayfalama değişkenleri  ...48,49,50,51,52,53...
  currentPageNo:number;
  totalProductCount:number;
@@ -78,8 +88,23 @@ constructor(private productService:ProductService,private activatedRoute:Activat
     }
   })
 
-
   }
+
+
+ async addToBasket(product:ListProduct)
+  {
+    this.showSpinner(SpinnerType.BallFall)
+    let _basketItem:CreateBasketItem = new CreateBasketItem();
+
+    _basketItem.productId = product.id;
+    _basketItem.quantity = 1;
+
+    await this.basketService.add(_basketItem);
+    this.hideSpinner(SpinnerType.BallFall)
+    this.toastrService.message("Ürün basarıyla sepete eklendi","Ürün Ekleme Başarılı",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
+  }
+
+
 
 
 }

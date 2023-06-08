@@ -35,7 +35,7 @@ export class ProductService {
       }
     );
   }
-
+  // güncellee
   async read(page: number = 0,size: number = 5,successCalback?: () => void,errorCallback?: (message: string) => void): Promise<{ totalCount: number; products: ListProduct[] }> {
     const data: Promise<{ totalCount: number; products: ListProduct[] }> =
       this.httpClientService.get<{ totalCount: number; products: ListProduct[] }>({
