@@ -53,14 +53,17 @@
               </li>
             </ul>
 
-                <span class="nav-link justify-content-end  mr-sm-2 m-2" >
+                <span class="nav-link justify-content-end  mr-sm-2 m-2" style="display: flex;">
                   <a
+                  matBadge="{{quantity}}"
                   class="nav-link active"
                   aria-current="page"
-                  routerLink="baskets"
                   data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="loadComponent()"
+                  style="cursor: pointer;"
                   >Basket</a>
                 </span>
+
 
                 <span class="nav-link justify-content-end  mr-sm-2 m-2" >
                   <a
@@ -109,4 +112,5 @@
 
 
 
-<app-baskets></app-baskets>
+<!-- <app-baskets></app-baskets> -->
+<ng-template appDynamicLoadComponent></ng-template> <!--dinamik olarak yüklenecek componentin nerede yükleneceğini belirtmek için.hem yüklenecek componenti hemde templatei bir direktife bağlayıp birbirlerini tanımalarını sağlıyacağız. -->

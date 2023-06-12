@@ -19,14 +19,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let basketItem of listBasketItem; let i=index">
+            <tr  *ngFor="let basketItem of listBasketItem; let i=index" class="{{basketItem.basketItemId}}">
               <th scope="row">{{i+1}}</th>
               <td>{{basketItem.name}}</td>
               <td>{{basketItem.price}}</td>
               <td>
-                <input type="number" min="0" data-id="{{basketItem.basketItemId}}" (change)="changeQuantity($event)" [value]="basketItem.quantity" style="width: 50px; height: 30px; border: none; outline: none;" />
+                <input type="number" min="0" (change)="changeQuantity($event,basketItem.basketItemId)" [value]="basketItem.quantity" style="width: 50px; height: 30px; border: none; outline: none;" />
               </td>
-
+              <td>
+                <mat-icon style="color: red; cursor: pointer;" (click)="deleteBasketItem(basketItem.basketItemId)">delete</mat-icon>
+              </td>
 
             </tr>
           </tbody>

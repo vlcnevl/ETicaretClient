@@ -15,8 +15,10 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleSigninButtonModule} f
 import { GoogleLoginProvider} from '@abacritt/angularx-social-login';
 import { LoginComponent } from './ui/components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
+import { MatBadgeModule } from '@angular/material/badge';
 @NgModule({
-  declarations: [AppComponent,LoginComponent],
+  declarations: [AppComponent,LoginComponent, DynamicLoadComponentDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,7 +36,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     }),
     SocialLoginModule,
     ReactiveFormsModule,
-    GoogleSigninButtonModule
+    GoogleSigninButtonModule,
+    MatBadgeModule,
+
   ],
   providers: [
     {provide:"baseUrl",useValue:"https://localhost:7162/api",multi:true},
