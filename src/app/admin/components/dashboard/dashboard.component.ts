@@ -14,13 +14,19 @@ import { AlertifyOptions, AlertifyService, MessageType, Position } from 'src/app
 export class DashboardComponent extends BaseComponent{
   constructor(spinner:NgxSpinnerService,private signalRService:SignalRService,private alertifyService:AlertifyService) {
     super(spinner);
-    signalRService.start(HubUrls.ProductHub)
+    signalRService.start(HubUrls.ProductHub) // env den çağırılabilir.
+    signalRService.start(HubUrls.OrderHub )
   }
   ngOnInit(): void {
     this.showSpinner(SpinnerType.BallNewton)
     this.signalRService.on(ReceiveFunctions.ProductAddedMessageReceiveFunction,message=>{
       this.alertifyService.message(message,{messageType:MessageType.Success,position:Position.TopRight})
     })
+
+    this.signalRService.on(ReceiveFunctions.OrderAddedMessageReceiveFunction,message=>{
+      this.alertifyService.message(message,{messageType:MessageType.Success,position:Position.TopRight})
+    })
+
   }
 
 }

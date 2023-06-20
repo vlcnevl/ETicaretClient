@@ -42,6 +42,7 @@ import { MatBadgeModule } from '@angular/material/badge';
   ],
   providers: [
     {provide:"baseUrl",useValue:"https://localhost:7162/api",multi:true},
+    {provide:"baseSignalRUrl",useValue:"https://localhost:7162/",multi:true},
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

@@ -21,9 +21,7 @@ export class AppComponent{
   constructor(public checkAuthService:CheckAuthService,private toastrService:CustomToastrService,private router:Router,private dynamicComponent:DynamicLoadComponentService) {
     checkAuthService.identityCheck();
   }
-   quantity:string;
   ngOnInit() {
-   this.quantity = localStorage.getItem("basketQuantity")
   }
 
   logout()

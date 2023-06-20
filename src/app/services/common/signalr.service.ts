@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HubConnection,HubConnectionBuilder,HubConnectionState } from '@microsoft/signalr';
 
 @Injectable({
@@ -6,7 +6,7 @@ import { HubConnection,HubConnectionBuilder,HubConnectionState } from '@microsof
 })
 export class SignalRService {
 
-  constructor() { }
+  constructor(@Inject("baseSignalRUrl") private baseSignalRUrl:string) { }
 
   private _connection:HubConnection;
   get connection():HubConnection // encapsulation.
@@ -16,6 +16,7 @@ export class SignalRService {
 
   start(hubUrl:string)// bir hub olusturması için
   {
+    hubUrl= this.baseSignalRUrl + hubUrl;
     if(!this._connection || this._connection?.state == HubConnectionState.Disconnected)
     {//hub olusturulacak demek.asagida olusturuluyor.
       const builder:HubConnectionBuilder = new HubConnectionBuilder();

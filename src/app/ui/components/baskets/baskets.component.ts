@@ -4,6 +4,10 @@ import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { BasketService } from 'src/app/services/common/models/basket.service';
 import { ListBasketItem } from 'src/app/contracts/basket/list_basket_item';
 import { UpdateBasketItem } from 'src/app/contracts/basket/update_basket_item';
+import { OrderService } from 'src/app/services/common/models/order.service';
+import { CreateOrder } from 'src/app/contracts/order/createOrder';
+import { CustomToastrService, ToastrMessageType, ToastrOptions, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
+import { Router } from '@angular/router';
 
 declare var $:any; //jquery
 
@@ -13,7 +17,7 @@ declare var $:any; //jquery
   styleUrls: ['./baskets.component.scss']
 })
 export class BasketsComponent extends BaseComponent {
-  constructor(spinner:NgxSpinnerService,private basketService:BasketService) {
+  constructor(spinner:NgxSpinnerService,private basketService:BasketService,private orderService:OrderService,private toastrService:CustomToastrService,private router:Router) {
     super(spinner);
   }
 
@@ -43,6 +47,19 @@ export class BasketsComponent extends BaseComponent {
    await this.basketService.remove(basketItemId)
     $("." + basketItemId).fadeOut(500,()=>this.hideSpinner(SpinnerType.BallFall)); //class değeri jqueryde böyle alınıyormıs.
 
+  }
+
+  async completeOrder()
+  {
+    this.showSpinner(SpinnerType.BallFall)
+    const order:CreateOrder = new CreateOrder();
+    order.address = "Ankara/Çubuk"
+    order.description = "Evde yoksam komsuya birak."
+   await this.orderService.create(order)
+   this.hideSpinner(SpinnerType.BallFall)
+   this.toastrService.message("Sipariş başarıyla oluşturuldu.","Sipariş Oluşturuldu",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
+
+    this.router.navigate(["/"]); // ana sayfaya yönlendirme
   }
 
 }
