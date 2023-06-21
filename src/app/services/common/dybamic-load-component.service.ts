@@ -16,15 +16,17 @@ export class DynamicLoadComponentService {
 
   async loadComponent(component:ComponentName,viewContainerRef:ViewContainerRef)
   {
-    let _component:any = null;
+
+    let _component:any;
     switch (component)
     {
       case ComponentName.BasketsComponent:
-      _component = (await import("../../ui/components/baskets/baskets.component")).BasketsComponent
+      const {BasketsComponent} = await import("../../ui/components/baskets/baskets.component")
+      _component = BasketsComponent
       break;
     }
 
-    viewContainerRef.clear;
+    viewContainerRef.clear();
    return viewContainerRef.createComponent(_component);
   }
 

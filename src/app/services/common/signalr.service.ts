@@ -8,17 +8,17 @@ export class SignalRService {
 
   constructor(@Inject("baseSignalRUrl") private baseSignalRUrl:string) { }
 
-  private _connection:HubConnection;
-  get connection():HubConnection // encapsulation.
-  {
-    return this._connection;
-  }
+  // private _connection:HubConnection;
+  // get connection():HubConnection // encapsulation.
+  // {
+  //   return this._connection;
+  // }
 
   start(hubUrl:string)// bir hub olusturması için
   {
     hubUrl= this.baseSignalRUrl + hubUrl;
-    if(!this._connection || this._connection?.state == HubConnectionState.Disconnected)
-    {//hub olusturulacak demek.asagida olusturuluyor.
+    // if(!this._connection || this._connection?.state == HubConnectionState.Disconnected)
+    //{hub olusturulacak demek.asagida olusturuluyor.
       const builder:HubConnectionBuilder = new HubConnectionBuilder();
       const hubConnection:HubConnection = builder.withUrl(hubUrl).withAutomaticReconnect().build();
 
@@ -26,21 +26,24 @@ export class SignalRService {
       hubConnection.start().then(()=>
           console.log("SignalR Connection started"))
         .catch(error=> setTimeout(()=> this.start(hubUrl),2000));
-        this._connection = hubConnection;
-    }
+        // this.hub = hubConnection;
+   //  }
 
-    this._connection.onreconnected(connectionId=> console.log("reconnected"));
+    hubConnection.onreconnected(connectionId=> console.log("reconnected"));
     //asagıdaki fonksiyonlar kullanım örnegi.
-    this._connection.onreconnecting(error => console.log("reconnecting"));
-    this._connection.onclose(error=> console.log("Close reconnection"));//baglantıyı tekrar kurmaya calıstıgında gelen hatayı yakar.
+    hubConnection.onreconnecting(error => console.log("reconnecting"));
+    hubConnection.onclose(error=> console.log("Close reconnection"));//baglantıyı tekrar kurmaya calıstıgında gelen hatayı yakar.
+
+    return hubConnection;
+
   }
 
-  invoke(procedureName:string,message:any,successCallback?:(value)=>void,errorCallback?:()=>void){ // backendde olusturdugumuz fonksiyonu tetiklemek için
+  invoke(hubUrl:string,procedureName:string,message:any,successCallback?:(value)=>void,errorCallback?:()=>void){ // backendde olusturdugumuz fonksiyonu tetiklemek için
 
-    this.connection.invoke(procedureName,message).then(successCallback).catch(errorCallback);
+    this.start(hubUrl).invoke(procedureName,message).then(successCallback).catch(errorCallback);
   } //mesajları diğer clientlere göndermek için
 
-  on(procedureName:string,callback?:(...message:any)=> void){
-    this._connection.on(procedureName,callback)
+  on(hubUrl:string,procedureName:string,callback?:(...message:any)=> void){
+    this.start(hubUrl).on(procedureName,callback)
   } // gelecek mesajları runtime'da yakalamak için
 }

@@ -18,7 +18,7 @@ export class AppComponent{
   dynamicLoadComponentDirective:DynamicLoadComponentDirective;
 
 
-  constructor(public checkAuthService:CheckAuthService,private toastrService:CustomToastrService,private router:Router,private dynamicComponent:DynamicLoadComponentService) {
+  constructor(public checkAuthService:CheckAuthService,private toastrService:CustomToastrService,private router:Router,private dynamicLoadComponentService:DynamicLoadComponentService) {
     checkAuthService.identityCheck();
   }
   ngOnInit() {
@@ -35,7 +35,10 @@ export class AppComponent{
   loadComponent()
   {
     //nesneyi direktifte public yapınca bıurdan ulasabildik
-    this.dynamicComponent.loadComponent(ComponentName.BasketsComponent,this.dynamicLoadComponentDirective.viewContainerRef);
+
+    const containerRef = this.dynamicLoadComponentDirective.viewContainerRef;
+    this.dynamicLoadComponentService.loadComponent(ComponentName.BasketsComponent,containerRef);
+
   }
 
 }

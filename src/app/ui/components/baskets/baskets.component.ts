@@ -8,6 +8,9 @@ import { OrderService } from 'src/app/services/common/models/order.service';
 import { CreateOrder } from 'src/app/contracts/order/createOrder';
 import { CustomToastrService, ToastrMessageType, ToastrOptions, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { Router } from '@angular/router';
+import { DialogService } from 'src/app/services/common/dialog.service';
+import { BasketItemDeleteState, BasketItemRemoveDialogComponent } from 'src/app/dialogs/basket-item-remove-dialog/basket-item-remove-dialog.component';
+import { CompleteOrderDialogComponent, CompleteOrderState } from 'src/app/dialogs/complete-order-dialog/complete-order-dialog.component';
 
 declare var $:any; //jquery
 
@@ -17,7 +20,7 @@ declare var $:any; //jquery
   styleUrls: ['./baskets.component.scss']
 })
 export class BasketsComponent extends BaseComponent {
-  constructor(spinner:NgxSpinnerService,private basketService:BasketService,private orderService:OrderService,private toastrService:CustomToastrService,private router:Router) {
+  constructor(spinner:NgxSpinnerService,private basketService:BasketService,private orderService:OrderService,private toastrService:CustomToastrService,private router:Router,private dialogService:DialogService) {
     super(spinner);
   }
 
@@ -25,9 +28,8 @@ export class BasketsComponent extends BaseComponent {
   async ngOnInit() {
     this.showSpinner(SpinnerType.BallNewton)
     this.listBasketItem = await this.basketService.get();
-    const quantity:number = this.listBasketItem.length;
-    localStorage.setItem("basketQuantity",quantity.toString())
     this.hideSpinner(SpinnerType.BallNewton)
+    debugger;
   }
 
  async changeQuantity(event:any,id:string)
@@ -41,25 +43,39 @@ export class BasketsComponent extends BaseComponent {
    this.hideSpinner(SpinnerType.BallFall)
   }
 
-  async deleteBasketItem(basketItemId:string)
+  deleteBasketItem(basketItemId:string)
   {
-   this.showSpinner(SpinnerType.BallFall)
-   await this.basketService.remove(basketItemId)
-    $("." + basketItemId).fadeOut(500,()=>this.hideSpinner(SpinnerType.BallFall)); //class değeri jqueryde böyle alınıyormıs.
+    this.dialogService.openDialog({
+      componentType:BasketItemRemoveDialogComponent,
+      data:BasketItemDeleteState.Yes,
+      afterClosed: async ()=>{
+        this.showSpinner(SpinnerType.BallFall)
+        await this.basketService.remove(basketItemId)
+         $("." + basketItemId).fadeOut(500,()=>this.hideSpinner(SpinnerType.BallFall)); //class değeri jqueryde böyle alınıyormıs.
 
+      }
+
+    })
   }
 
-  async completeOrder()
+  completeOrder()
   {
-    this.showSpinner(SpinnerType.BallFall)
-    const order:CreateOrder = new CreateOrder();
-    order.address = "Ankara/Çubuk"
-    order.description = "Evde yoksam komsuya birak."
-   await this.orderService.create(order)
-   this.hideSpinner(SpinnerType.BallFall)
-   this.toastrService.message("Sipariş başarıyla oluşturuldu.","Sipariş Oluşturuldu",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
+      this.dialogService.openDialog({
+        componentType:CompleteOrderDialogComponent,
+        data:CompleteOrderState.Yes,
+        afterClosed:async ()=>{
+         this.showSpinner(SpinnerType.BallFall)
+         const order:CreateOrder = new CreateOrder();
+         order.address = "Ankara/Çubuk"
+         order.description = "Evde yoksam komsuya birak."
+         await this.orderService.create(order)
+         this.hideSpinner(SpinnerType.BallFall)
+         this.toastrService.message("Sipariş başarıyla oluşturuldu.","Sipariş Oluşturuldu",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
 
-    this.router.navigate(["/"]); // ana sayfaya yönlendirme
+         this.router.navigate(["/"]); // ana sayfaya yönlendirme
+        }
+      })
+
   }
 
 }
