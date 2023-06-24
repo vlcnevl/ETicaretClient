@@ -29,7 +29,6 @@ export class BasketsComponent extends BaseComponent {
     this.showSpinner(SpinnerType.BallNewton)
     this.listBasketItem = await this.basketService.get();
     this.hideSpinner(SpinnerType.BallNewton)
-    debugger;
   }
 
  async changeQuantity(event:any,id:string)

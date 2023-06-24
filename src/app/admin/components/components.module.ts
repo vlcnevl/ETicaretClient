@@ -7,7 +7,9 @@ import { CustomersModule } from './customers/customers.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+
+  ],
   imports: [
     CommonModule,ProductsModule,OrdersModule,DashboardModule,CustomersModule
   ]

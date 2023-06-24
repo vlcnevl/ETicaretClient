@@ -10,10 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon'
-import { DeleteDirective } from 'src/app/directives/admin/delete.directive';
 // import { MatDialogModule } from '@angular/material/dialog';
 // import { DeleteDialogComponent } from 'src/app/dialogs/delete-dialog/delete-dialog.component';
 import { DialogModule } from 'src/app/dialogs/dialog.module';
+import { DeleteModule } from 'src/app/directives/admin/delete.module';
 
 
 @NgModule({
@@ -21,11 +21,10 @@ import { DialogModule } from 'src/app/dialogs/dialog.module';
     ProductsComponent,
     CreateComponent,
     ListComponent,
-    DeleteDirective,
   ],
   imports: [
     CommonModule,RouterModule.forChild([{path:"",component:ProductsComponent}]),
-    MatSidenavModule,MatInputModule,MatButtonModule,MatTableModule,MatPaginatorModule,MatIconModule,DialogModule
+    MatSidenavModule,MatInputModule,MatButtonModule,MatTableModule,MatPaginatorModule,MatIconModule,DialogModule,DeleteModule
   ]
 })
 export class ProductsModule { }
