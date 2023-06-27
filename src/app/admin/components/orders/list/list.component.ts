@@ -1,9 +1,11 @@
+import { OrderDetailState } from './../../../../dialogs/order-detail-dialog/order-detail-dialog.component';
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { ListOrder } from 'src/app/contracts/order/listOrder';
+import { OrderDetailDialogComponent } from 'src/app/dialogs/order-detail-dialog/order-detail-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
@@ -24,7 +26,7 @@ export class ListComponent extends BaseComponent {
     super(spinner);
   }
 
-  displayedColumns: string[] = ['orderCode','userName','address','totalPrice','createdDate','delete'];
+  displayedColumns: string[] = ['orderCode','userName','address','totalPrice','createdDate','viewDetail','delete'];
   dataSource: MatTableDataSource<ListOrder> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -53,5 +55,17 @@ export class ListComponent extends BaseComponent {
   async pageChanged(){
     await this.getOrders()
   }
+
+  viewDetail(orderId:string)
+  {
+    this.dialogService.openDialog({
+      componentType:OrderDetailDialogComponent,
+      options:{width:"800px"},
+      data:orderId
+    })
+  }
+
+
+
 
 }

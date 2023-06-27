@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, firstValueFrom } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
@@ -34,6 +35,13 @@ export class OrderService {
     await firstValueFrom(deleteObservable);
   }
 
+  async getById(id:string,successCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void)
+  {
+    const observable:Observable<any> = this.httpClientService.get({controller:"orders"},id); // callback func lari tetiklemek için bu model işe yarıyor.
+    const promiseData = firstValueFrom(observable);
 
+    promiseData.then(data=>successCallBack()).catch(error=> errorCallBack(error));
+    return await promiseData;
+  }
 
 }

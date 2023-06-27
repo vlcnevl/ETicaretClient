@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { DeleteModule } from 'src/app/directives/admin/delete.module';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -16,7 +17,7 @@ import { DeleteModule } from 'src/app/directives/admin/delete.module';
     ListComponent,
   ],
   imports: [
-    CommonModule,RouterModule.forChild([{path:"",component:OrdersComponent}]),MatIconModule,MatPaginatorModule,MatTableModule,DeleteModule
+    CommonModule,RouterModule.forChild([{path:"",component:OrdersComponent}]),MatIconModule,MatPaginatorModule,MatTableModule,DeleteModule,MatButtonModule
   ]
 })
 export class OrdersModule { }
