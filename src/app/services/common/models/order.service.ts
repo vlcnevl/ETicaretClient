@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
 import { CreateOrder } from 'src/app/contracts/order/createOrder';
 import { ListOrder } from 'src/app/contracts/order/listOrder';
+import { SingleOrder } from 'src/app/contracts/order/singleOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -35,9 +36,9 @@ export class OrderService {
     await firstValueFrom(deleteObservable);
   }
 
-  async getById(id:string,successCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void)
+  async getById(id:string,successCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void) : Promise<SingleOrder>
   {
-    const observable:Observable<any> = this.httpClientService.get({controller:"orders"},id); // callback func lari tetiklemek için bu model işe yarıyor.
+    const observable:Observable<SingleOrder> = this.httpClientService.get<SingleOrder>({controller:"orders"},id); // callback func lari tetiklemek için bu model işe yarıyor.
     const promiseData = firstValueFrom(observable);
 
     promiseData.then(data=>successCallBack()).catch(error=> errorCallBack(error));
