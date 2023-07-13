@@ -9,11 +9,11 @@ import { HttpClientService } from '../http-client.service';
 })
 export class AuthService {
 
-  constructor(private httpClient:HttpClientService) { }
+  constructor(private httpClientService:HttpClientService) { }
 
   async login(usernameOrEmail:string,password:string,successCallback?:()=>void,errorCallback?:()=>void) : Promise<any>
   {  // anyde gönderebilirim token de alabilirim.
-     const observable:Observable<any | TokenResponse> = this.httpClient.post<any | TokenResponse>({controller:"auth",action:"login"},{usernameOrEmail,password});
+     const observable:Observable<any | TokenResponse> = this.httpClientService.post<any | TokenResponse>({controller:"auth",action:"login"},{usernameOrEmail,password});
      const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
 
      if(tokenResponse)
@@ -30,7 +30,7 @@ export class AuthService {
 
   async googleLogin(user:SocialUser,successCallback?:()=> void,errorCallback?:()=>void):Promise<any>
   {
-    const observable:Observable<SocialUser |TokenResponse> = this.httpClient.post<SocialUser | TokenResponse>({controller:"auth",action:"GoogleLogin"},user);
+    const observable:Observable<SocialUser |TokenResponse> = this.httpClientService.post<SocialUser | TokenResponse>({controller:"auth",action:"GoogleLogin"},user);
     const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
 
     if(tokenResponse)
@@ -46,7 +46,7 @@ export class AuthService {
 
   async refreshTokenLogin(refreshToken:string,successCallback?:()=> void,errorCallback?:()=> void) : Promise<any>
   {
-    const observable:Observable<any | TokenResponse> = this.httpClient.post({controller:"auth",action:"refreshtokenlogin"},{refreshToken:refreshToken})
+    const observable:Observable<any | TokenResponse> = this.httpClientService.post({controller:"auth",action:"refreshtokenlogin"},{refreshToken:refreshToken})
 
     const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
 
@@ -60,6 +60,16 @@ export class AuthService {
       errorCallback();
 
   }
+
+
+  async resetPassword(email:string,callBackFunction?:()=> void)
+  {
+      const observable:Observable<any> = this.httpClientService.post({controller:"auth",action:"reset-password"},{email:email});
+
+      firstValueFrom(observable);
+      callBackFunction();
+  }
+
 
 
 }

@@ -17,10 +17,11 @@
     <input formControlName="password" id="password" type="password" class="form-control"  placeholder="password" [ngClass]="{'is-invalid': submitted && component.password.errors}">
     <small class="form-text invalid-feedback" style="color: red;" *ngIf="submitted && component.password.errors?.['required']">Şifre alanı boş geçilemez!</small>
   </div>
-
+  <a routerLink="/reset-password" style="margin-left: 10px; cursor: pointer; text-decoration: none;">Şifremi Unuttum</a>
   <div style="display: flex; justify-content: center;" class="mt-4">
 
   <button type="submit" class="btn btn-primary ">Giriş Yap</button></div>
+
   <div style="display: flex; justify-content: center;" class="mt-4">
     <asl-google-signin-button type='standard' size='medium'></asl-google-signin-button> <br/>
   </div>
