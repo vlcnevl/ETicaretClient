@@ -83,7 +83,7 @@ const routes: Routes = [
 
   },
   {
-    path:'update-password',
+    path:'update-password/:userId/:resetToken',
     loadChildren:()=> import('./ui/components/update-password/update-password.module').then((module)=> module.UpdatePasswordModule)
 
   }
