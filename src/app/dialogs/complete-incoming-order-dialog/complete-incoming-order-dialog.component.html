@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Siparişi Tamamla</h1>
+<div mat-dialog-content>
+  <p>Sipariş işlemini tamamladığına emin misin ?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">No</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="data" >Yes</button>
+</div>

@@ -1,8 +1,13 @@
+import { DialogService } from './../../services/common/dialog.service';
 import { OrderService } from './../../services/common/models/order.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { BaseDialog } from '../base-dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SingleOrder } from 'src/app/contracts/order/singleOrder';
+import { CompleteIncomingOrderDialogComponent } from '../complete-incoming-order-dialog/complete-incoming-order-dialog.component';
+import { CompleteOrderState } from '../complete-order-dialog/complete-order-dialog.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-order-detail-dialog',
@@ -12,7 +17,7 @@ import { SingleOrder } from 'src/app/contracts/order/singleOrder';
 export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComponent> implements OnInit{
   constructor(dialogRef:MatDialogRef<OrderDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data:OrderDetailState | string, // seçilen orderin id sini alabilirim yada cancel statei
-    private orderService:OrderService
+    private orderService:OrderService,private dialogService:DialogService,private spinner:NgxSpinnerService
     )
   {
     super(dialogRef);
@@ -29,6 +34,21 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
     this.dataSource = this.singleOrder.basketItems;
     this.totalPrice = this.singleOrder.basketItems.map((basketItem,index)=> basketItem.price*basketItem.quantity ).reduce((price,current)=> price+current)
   }
+
+  completeOrder(){
+    this.dialogService.openDialog({
+      componentType:CompleteIncomingOrderDialogComponent,
+      data:CompleteOrderState.Yes,
+     afterClosed:async ()=>{
+      this.spinner.show(SpinnerType.BallFall)
+        await  this.orderService.completeOrder(this.data as string);
+        this.spinner.hide(SpinnerType.BallFall)
+     }
+
+    })
+  }
+
+
 }
 
 export enum OrderDetailState{
