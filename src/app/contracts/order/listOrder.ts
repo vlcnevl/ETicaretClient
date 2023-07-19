@@ -5,4 +5,5 @@ userName:string;
 totalPrice:number;
 createdDate:Date;
 address:string;
+completed:boolean;
 }

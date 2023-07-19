@@ -26,6 +26,17 @@
       <td mat-cell *matCellDef="let element">{{ element.createdDate }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="completed">
+      <th mat-header-cell *matHeaderCellDef>Completed</th>
+      <td mat-cell *matCellDef="let element">
+
+        <span [ngStyle]="{color:element.completed ? 'green': 'red'}" [ngClass]="{'material-icons': true, 'check-icon': element.completed, 'clear-icon': !element.completed}">
+          {{ element.completed ? 'check' : 'clear' }}
+        </span>
+
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="viewDetail">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">

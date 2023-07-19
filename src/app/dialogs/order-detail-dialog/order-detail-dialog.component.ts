@@ -8,6 +8,7 @@ import { CompleteIncomingOrderDialogComponent } from '../complete-incoming-order
 import { CompleteOrderState } from '../complete-order-dialog/complete-order-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Component({
   selector: 'app-order-detail-dialog',
@@ -17,7 +18,7 @@ import { SpinnerType } from 'src/app/base/base.component';
 export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComponent> implements OnInit{
   constructor(dialogRef:MatDialogRef<OrderDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data:OrderDetailState | string, // seçilen orderin id sini alabilirim yada cancel statei
-    private orderService:OrderService,private dialogService:DialogService,private spinner:NgxSpinnerService
+    private orderService:OrderService,private dialogService:DialogService,private spinner:NgxSpinnerService,private customToastrService:CustomToastrService
     )
   {
     super(dialogRef);
@@ -43,8 +44,8 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
       this.spinner.show(SpinnerType.BallFall)
         await  this.orderService.completeOrder(this.data as string);
         this.spinner.hide(SpinnerType.BallFall)
+        this.customToastrService.message("Sipariş tamamlama işlemi başarılı.","Sipariş Tamamlandı.",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
      }
-
     })
   }
 

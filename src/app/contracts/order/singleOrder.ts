@@ -5,6 +5,7 @@ export class SingleOrder {
   description:string;
   address:string;
   createdDate:Date;
+  completed:boolean;
 }
 
 
