@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{data.name}} Endpointine Rol Ata</h1>
+<div mat-dialog-content>
+  <br>
+  <div matBadge="4" matBadgeOverlap="false" class="demo-section">Rolleri Seç</div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">No</button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="data" >Yes</button>
+</div>
