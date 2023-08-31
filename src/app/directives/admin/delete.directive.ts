@@ -53,7 +53,7 @@ export class DeleteDirective {
           const td:HTMLTableCellElement = this.element.nativeElement;
           await this.httpClientService.delete({controller:this.controller},this.id).subscribe(data=> {
             $(td.parentElement).animate({opacity:0,left:"+=50",height:"toggle"},700,()=> {this.callBack.emit(); this.spinner.hide(SpinnerType.BallNewton)})
-            this.alertify.message("ürün başarıyla silindi.",{messageType:MessageType.Success,position:Position.TopRight})
+            this.alertify.message(`${this.controller == 'roles' ? "Rol" : "Ürün"} Başarıyla silinmiştir.`,{messageType:MessageType.Success,position:Position.TopRight})
           },(errorResponse:HttpErrorResponse)=>{
             this.spinner.hide(SpinnerType.BallNewton)
             this.alertify.message("ürün silinirken hata oluştu.",{messageType:MessageType.Error,position:Position.TopRight})

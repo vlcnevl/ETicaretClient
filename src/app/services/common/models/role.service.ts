@@ -12,11 +12,16 @@ export class RoleService {
  async create(roleName:string,successCallback?:()=>void,errorCallback?:(error)=>void)
   {
     const observable:Observable<any> =  this.httpClientService.post({controller:"roles"},{name:roleName});
-   return await firstValueFrom(observable) as {succeded:boolean}
+    const promiseData =firstValueFrom(observable);
+    promiseData.then(successCallback).catch(errorCallback);
+    return await promiseData;
   }
 
-  getRoles()
+  async getRoles(page:number,size:number,successCallback?:()=>void,erroCallback?:(error)=>void)
   {
-    const observable:Observable<any> = this.httpClientService.get({controller:"roles"});
+    const observable:Observable<any> = this.httpClientService.get({controller:"roles",queryString: `page=${page}&size=${size}`,});
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(successCallback).catch(erroCallback);
+    return await promiseData;
   }
 }

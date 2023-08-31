@@ -37,18 +37,26 @@ export class ProductService {
   }
   // güncellee
   async read(page: number = 0,size: number = 5,successCalback?: () => void,errorCallback?: (message: string) => void): Promise<{ totalCount: number; products: ListProduct[] }> {
-    const data: Promise<{ totalCount: number; products: ListProduct[] }> =
-      this.httpClientService.get<{ totalCount: number; products: ListProduct[] }>({
-          controller: 'products',
-          queryString: `page=${page}&size=${size}`,
-        }).toPromise();
 
-    data
-      .then((d) => successCalback())
-      .catch((httpError: HttpErrorResponse) => {
-        errorCallback(httpError.message);
-      });
-    return await data;
+    // const data: Promise<{ totalCount: number; products: ListProduct[] }> =
+    //   this.httpClientService.get<{ totalCount: number; products: ListProduct[] }>({
+    //       controller: 'products',
+    //       queryString: `page=${page}&size=${size}`,
+    //     }).toPromise();
+
+    // data
+    //   .then((d) => successCalback())
+    //   .catch((httpError: HttpErrorResponse) => {
+    //     errorCallback(httpError.message);
+    //   });
+    // return await data; // eski hali
+
+
+//yeni hali
+    const observable:Observable<{ totalCount: number; products: ListProduct[] }> = this.httpClientService.get({controller:"products",queryString: `page=${page}&size=${size}`,});
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(successCalback).catch((httpError:HttpErrorResponse)=>{errorCallback(httpError.message)});
+    return await promiseData;
   }
 
   async delete(id: string) {

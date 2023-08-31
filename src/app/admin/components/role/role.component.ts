@@ -9,7 +9,7 @@ import { ListComponent } from '../role/list/list.component';
 export class RoleComponent {
   @ViewChild(ListComponent) listComponent:ListComponent;
 
-  createdProduct(createdRole:string){ // rol ekleyince list componentdeki get rolesi  tetikledi
+  createdRole(createdRole:string){ // rol ekleyince list componentdeki get rolesi  tetikledi
     this.listComponent.getRoles(); // redux yada service kullanılabilridi
   }
 
