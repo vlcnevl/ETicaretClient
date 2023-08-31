@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthorizeMenuDialogComponent } from './authorize-menu-dialog.component';
+import AuthorizeMenuDialogComponent from './authorize-menu-dialog.component';
 
 describe('AuthorizeMenuDialogComponent', () => {
   let component: AuthorizeMenuDialogComponent;

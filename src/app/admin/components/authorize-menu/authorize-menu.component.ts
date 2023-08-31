@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from '../../../base/base.component';
 import { DialogService } from '../../../services/common/dialog.service';
 import { ApplicationService } from '../../../services/common/models/application.service';
-import { AuthorizeMenuDialogComponent } from 'src/app/dialogs/authorize-menu-dialog/authorize-menu-dialog.component';
+import AuthorizeMenuDialogComponent from 'src/app/dialogs/authorize-menu-dialog/authorize-menu-dialog.component';
 
 interface ITreeMenu {
   name?: string;

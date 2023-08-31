@@ -1,9 +1,19 @@
 <h1 mat-dialog-title>{{data.name}} Endpointine Rol Ata</h1>
-<div mat-dialog-content>
-  <br>
-  <div matBadge="4" matBadgeOverlap="false" class="demo-section">Rolleri Seç</div>
+
+
+<div class="demo-section" style="display: flex; align-items: center; justify-content: flex-end; margin-right: 30px;">
+  <div style="font-weight: bold; font-size: large;">Rolleri Seç</div>
+  <div matBadge="{{shoes.selectedOptions.selected.length}}" matBadgeOverlap="false" style="padding: 5px 10px;  margin-left: -10px; "></div>
 </div>
+
+<mat-selection-list #shoes class="selection-list">
+  <mat-list-option *ngFor="let role of listRole.roles">
+    {{role.name}}
+  </mat-list-option>
+</mat-selection-list>
+
 <div mat-dialog-actions>
   <button mat-button (click)="close()">No</button>
   <button mat-button cdkFocusInitial [mat-dialog-close]="data" >Yes</button>
 </div>
+

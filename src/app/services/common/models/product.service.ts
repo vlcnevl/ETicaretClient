@@ -53,7 +53,7 @@ export class ProductService {
 
 
 //yeni hali
-    const observable:Observable<{ totalCount: number; products: ListProduct[] }> = this.httpClientService.get({controller:"products",queryString: `page=${page}&size=${size}`,});
+    const observable:Observable<{ totalCount: number; products: ListProduct[] }> = this.httpClientService.get({controller:"products",queryString: `page=${page}&size=${size}`});
     const promiseData = firstValueFrom(observable);
     promiseData.then(successCalback).catch((httpError:HttpErrorResponse)=>{errorCallback(httpError.message)});
     return await promiseData;
