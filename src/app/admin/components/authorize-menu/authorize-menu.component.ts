@@ -41,7 +41,8 @@ export class AuthorizeMenuComponent extends BaseComponent implements OnInit {
         actions: m.actions.map(a=>{
           const _treeMenu : ITreeMenu = {
             name:a.definition,
-            code:a.code
+            code:a.code,
+            menuName:m.name
           }
           return _treeMenu;
         })
@@ -74,9 +75,9 @@ export class AuthorizeMenuComponent extends BaseComponent implements OnInit {
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-    addRole(code:string,name:string)
+    addRole(code:string,name:string,menuName:string)
     {
-      this.dialogService.openDialog({componentType:AuthorizeMenuDialogComponent,data:{code,name},options:{width:"750px"},afterClosed:()=>{
+      this.dialogService.openDialog({componentType:AuthorizeMenuDialogComponent,data:{code:code,name:name,menuName:menuName},options:{width:"750px"},afterClosed:()=>{
 
       }})
     }
