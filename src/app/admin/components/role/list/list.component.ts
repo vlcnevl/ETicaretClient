@@ -1,9 +1,11 @@
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { ListRole } from 'src/app/contracts/roles/list_role';
+import { UpdateRoleDialogComponent } from 'src/app/dialogs/update-role-dialog/update-role-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { RoleService } from 'src/app/services/common/models/role.service';
@@ -15,11 +17,11 @@ import { RoleService } from 'src/app/services/common/models/role.service';
 })
 export class ListComponent extends BaseComponent implements OnInit{
 
-  constructor(spinner: NgxSpinnerService,private roleService: RoleService,private alertify: AlertifyService,private dialogService :DialogService) {
+  constructor(spinner: NgxSpinnerService,private roleService: RoleService,private alertify: AlertifyService,private dialogService :DialogService,private customToastrService:CustomToastrService) {
     super(spinner);
   }
 
-  displayedColumns: string[] = ['name','update','delete'];
+  displayedColumns: string[] = ['name','edit','delete'];
   dataSource: MatTableDataSource<ListRole> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -33,7 +35,7 @@ export class ListComponent extends BaseComponent implements OnInit{
 
       this.dataSource = new MatTableDataSource<ListRole>(allRoles.roles);
       this.paginator.length = allRoles.totalCount;
-    }
+  }
 
   async pageChanged()
   {
@@ -43,5 +45,15 @@ export class ListComponent extends BaseComponent implements OnInit{
   async ngOnInit() {
     await this.getRoles();
   }
+
+
+  updateRole(id:string,name:string)
+  {
+    this.dialogService.openDialog({
+      componentType:UpdateRoleDialogComponent,
+      data:{id,name}
+    })
+  }
+
 
 }

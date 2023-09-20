@@ -26,7 +26,7 @@ export class AuthorizationEndpointService {
     const observable:Observable<any> = this.httpClientService.post({controller:"AuthorizationEndpoints",action:"GetRolesToEndpoint"},{code:code,menu:menu});
     const promiseData = firstValueFrom(observable);
     promiseData.then(s=>successCallback).catch(e=>errorCallback);
-    return await promiseData;
+    return (await promiseData).roles;
   }
 
 

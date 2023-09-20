@@ -22,6 +22,15 @@ export class RoleService {
     const observable:Observable<any> = this.httpClientService.get({controller:"roles",queryString: `page=${page}&size=${size}`});
     const promiseData = firstValueFrom(observable);
     promiseData.then(successCallback).catch(erroCallback);
+     return await promiseData;
+  }
+
+  async updateRole(id:string,roleName:string,successCallback?:()=>void,errorCallback?:(error)=>void)
+  {
+    const observable:Observable<any> = this.httpClientService.put({controller:"roles"},{id:id,name:roleName});
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(successCallback).catch(errorCallback);
     return await promiseData;
   }
+
 }

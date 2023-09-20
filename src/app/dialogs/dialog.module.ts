@@ -15,9 +15,10 @@ import { CompleteIncomingOrderDialogComponent } from './complete-incoming-order-
 import {MatBadgeModule} from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import AuthorizeMenuDialogComponent from './authorize-menu-dialog/authorize-menu-dialog.component';
+import { UpdateRoleDialogComponent } from './update-role-dialog/update-role-dialog.component';
 
 @NgModule({
-  declarations: [DeleteDialogComponent, SelectProductImageDialogComponent, BasketItemRemoveDialogComponent, CompleteOrderDialogComponent, OrderDetailDialogComponent, CompleteIncomingOrderDialogComponent, AuthorizeMenuDialogComponent],
+  declarations: [DeleteDialogComponent, SelectProductImageDialogComponent, BasketItemRemoveDialogComponent, CompleteOrderDialogComponent, OrderDetailDialogComponent, CompleteIncomingOrderDialogComponent, AuthorizeMenuDialogComponent, UpdateRoleDialogComponent],
   imports: [
     CommonModule,MatDialogModule,MatButtonModule,FileUploadModule,MatCardModule,MatTableModule,MatToolbarModule,MatListModule,MatBadgeModule]
 })

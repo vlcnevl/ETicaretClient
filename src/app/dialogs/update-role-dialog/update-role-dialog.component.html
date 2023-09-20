@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Güncelle</h1>
+<div mat-dialog-content>
+  <p>Rolü güncelle</p>
+
+
+  <input #txtRole placeholder="{{data.name}}"/>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Vazgeç
+  </button>
+  <button mat-button cdkFocusInitial [mat-dialog-close]="data" (click)="updateRole(txtRole)" >Güncelle</button>
+</div>

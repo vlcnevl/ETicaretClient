@@ -15,12 +15,21 @@ export default class AuthorizeMenuDialogComponent extends BaseDialog<AuthorizeMe
   constructor(dialogRef:MatDialogRef<AuthorizeMenuDialogComponent>, @Inject(MAT_DIALOG_DATA) public data:any,private roleService:RoleService,private authorizationEndpointService:AuthorizationEndpointService){
     super(dialogRef)
   }
+
+
   listRole:{roles:ListRole[],totalCount:number}
+  assignedRoles:Array<string>;
   async ngOnInit() {
     this.listRole = await this.roleService.getRoles(-1,-1);
-    const roles = await this.authorizationEndpointService.getRolesEndpoint(this.data.code,this.data.menuName)
-    debugger;
+    this.assignedRoles = await this.authorizationEndpointService.getRolesEndpoint(this.data.code,this.data.menuName);
   }
+
+  isExist(name:string):boolean
+  {
+    return this.assignedRoles?.indexOf(name)>-1
+  }
+
+
 
   assignRole(rolesComponent:MatSelectionList)
   {
