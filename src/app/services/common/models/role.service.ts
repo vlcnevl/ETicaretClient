@@ -13,7 +13,7 @@ export class RoleService {
   {
     const observable:Observable<any> =  this.httpClientService.post({controller:"roles"},{name:roleName});
     const promiseData =firstValueFrom(observable);
-    promiseData.then(successCallback).catch(errorCallback);
+    promiseData.then(()=>successCallback()).catch((error)=>errorCallback(error));
     return await promiseData;
   }
 
@@ -21,7 +21,7 @@ export class RoleService {
   {
     const observable:Observable<any> = this.httpClientService.get({controller:"roles",queryString: `page=${page}&size=${size}`});
     const promiseData = firstValueFrom(observable);
-    promiseData.then(successCallback).catch(erroCallback);
+    promiseData.then(()=>successCallback).catch(erroCallback);
      return await promiseData;
   }
 
@@ -29,7 +29,7 @@ export class RoleService {
   {
     const observable:Observable<any> = this.httpClientService.put({controller:"roles"},{id:id,name:roleName});
     const promiseData = firstValueFrom(observable);
-    promiseData.then(successCallback).catch(errorCallback);
+    promiseData.then(()=>successCallback).catch((error)=>errorCallback(error));
     return await promiseData;
   }
 

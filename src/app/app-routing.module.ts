@@ -51,6 +51,13 @@ const routes: Routes = [
             (module) => module.RoleModule
           ),canActivate:[AuthGuard],
       },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./admin/components/user/user.module').then(
+            (module) => module.UserModule
+          ),canActivate:[AuthGuard],
+      },
 
 
     ],canActivate:[AuthGuard],

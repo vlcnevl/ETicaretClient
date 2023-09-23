@@ -1,4 +1,3 @@
-import { OrderDetailState } from './../../../../dialogs/order-detail-dialog/order-detail-dialog.component';
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';

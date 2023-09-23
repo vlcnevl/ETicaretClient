@@ -16,9 +16,10 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import AuthorizeMenuDialogComponent from './authorize-menu-dialog/authorize-menu-dialog.component';
 import { UpdateRoleDialogComponent } from './update-role-dialog/update-role-dialog.component';
+import { AuthorizeUserDialogComponent } from './authorize-user-dialog/authorize-user-dialog.component';
 
 @NgModule({
-  declarations: [DeleteDialogComponent, SelectProductImageDialogComponent, BasketItemRemoveDialogComponent, CompleteOrderDialogComponent, OrderDetailDialogComponent, CompleteIncomingOrderDialogComponent, AuthorizeMenuDialogComponent, UpdateRoleDialogComponent],
+  declarations: [DeleteDialogComponent, SelectProductImageDialogComponent, BasketItemRemoveDialogComponent, CompleteOrderDialogComponent, OrderDetailDialogComponent, CompleteIncomingOrderDialogComponent, AuthorizeMenuDialogComponent, UpdateRoleDialogComponent, AuthorizeUserDialogComponent],
   imports: [
     CommonModule,MatDialogModule,MatButtonModule,FileUploadModule,MatCardModule,MatTableModule,MatToolbarModule,MatListModule,MatBadgeModule]
 })
