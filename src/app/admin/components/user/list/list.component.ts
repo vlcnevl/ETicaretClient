@@ -16,7 +16,7 @@ import { UserService } from 'src/app/services/common/models/user.service';
 })
 export class ListComponent extends BaseComponent implements OnInit {
 
-  constructor(spinner: NgxSpinnerService,private alertify: AlertifyService,private userService:UserService,private dialogService:DialogService){
+  constructor(spinner: NgxSpinnerService,private alertifyService:AlertifyService,private userService:UserService,private dialogService:DialogService){
       super(spinner)
     }
 
@@ -35,7 +35,7 @@ export class ListComponent extends BaseComponent implements OnInit {
         this.hideSpinner(SpinnerType.BallNewton);
       },
       (message) => {
-        this.alertify.message(message, {
+        this.alertifyService.message(message, {
           messageType: MessageType.Error,
           position: Position.TopRight,
         });
@@ -59,8 +59,11 @@ export class ListComponent extends BaseComponent implements OnInit {
       options:{
         width:"750px"
       },
-      afterClosed() {
-
+      afterClosed:()=> {
+        this.alertifyService.message("Roller başarıya atandı.", {
+          messageType: MessageType.Success,
+          position: Position.TopRight,
+        });
       },
     })
   }

@@ -24,8 +24,5 @@ export class UpdateRoleDialogComponent extends BaseDialog<UpdateRoleDialogCompon
     this.roleService.updateRole(this.data.id,role.value,()=>{
       this.customToastrService.message("Rol güncelleme işlemi başarılı.","Rol Güncelleme Tamamlandı.",{messageType:ToastrMessageType.Success,position:ToastrPosition.TopRight})
     });
-    debugger;
-
-
   }
 }
