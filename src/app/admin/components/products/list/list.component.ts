@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
 import { BaseComponent } from 'src/app/base/base.component';
 import { ListProduct } from 'src/app/contracts/product/list_product';
+import { QrCodeDialogComponent } from 'src/app/dialogs/qr-code-dialog/qr-code-dialog.component';
 import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import {
   AlertifyService,
@@ -31,7 +32,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     super(spinner);
   }
 
-  displayedColumns: string[] = ['name','stock','price','description','createdDate','updatedDate','addImage','update','delete'];
+  displayedColumns: string[] = ['name','stock','price','description','createdDate','updatedDate','addImage','qr','update','delete'];
   dataSource: MatTableDataSource<ListProduct> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -69,6 +70,19 @@ export class ListComponent extends BaseComponent implements OnInit {
       options:{width:"1000px"}
     })
   }
+
+  getQrCode(id:string)
+  {
+    this.dialogService.openDialog({
+      componentType:QrCodeDialogComponent,
+      data:id,
+      options:{width:"600px"},
+      afterClosed:()=> {
+
+      },
+    })
+  }
+
 
 
 }

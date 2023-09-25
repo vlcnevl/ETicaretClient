@@ -12,28 +12,39 @@ import { ListProductImage } from 'src/app/contracts/product/list_product_image';
 export class ProductService {
   constructor(private httpClientService: HttpClientService) {}
 
-  create(
-    product: CreateProduct,
-    successCalback?: () => void,
-    errorCallback?: (message: string) => void
-  ) {
-    this.httpClientService.post({ controller: 'products' }, product).subscribe(
-      (result) => {
-        successCalback();
-      },
-      (errorResponse: HttpErrorResponse) => {
-        const _error: Array<{ key: string; value: Array<string> }> =
-          errorResponse.error; // kendi özel veri tipimizi olusturduk hata koduna karsı hata mesajlarını çektik
-        let message = '';
-        debugger;
-        _error.forEach((v, index) => {
-          v.value.forEach((_v, index) => {
-            message += `${_v} <br>`;
-          });
+  create(product: CreateProduct,successCalback?: () => void,errorCallback?: (message: string) => void) {
+    // this.httpClientService.post({ controller: 'products' }, product).subscribe(
+    //   (result) => {
+    //     successCalback();
+    //   },
+    //   (errorResponse: HttpErrorResponse) => {
+    //     const _error: Array<{ key: string; value: Array<string> }> =
+    //       errorResponse.error; // kendi özel veri tipimizi olusturduk hata koduna karsı hata mesajlarını çektik
+    //     let message = '';
+    //     debugger;
+    //     _error.forEach((v, index) => {
+    //       v.value.forEach((_v, index) => {
+    //         message += `${_v} <br>`;
+    //       });
+    //     });
+    //     errorCallback(message);
+    //   }
+    // );
+
+    //code refactoring
+    const observable:Observable<any> = this.httpClientService.post({controller:"products"},product);
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(()=>successCalback(),(errorResponse:HttpErrorResponse)=>{
+      const _error:Array<{key:string; value:Array<string>}> = errorResponse.error;
+      let message='';
+      _error.forEach((v,index)=>{
+        v.value.forEach((_v,index)=>{
+          message+=`${_v}<br>`;
         });
-        errorCallback(message);
-      }
-    );
+      });
+      errorCallback(message);
+    })
+
   }
   // güncellee
   async read(page: number = 0,size: number = 5,successCalback?: () => void,errorCallback?: (message: string) => void): Promise<{ totalCount: number; products: ListProduct[] }> {
@@ -92,6 +103,13 @@ export class ProductService {
    const changeShowcaseImageObservable =  this.httpClientService.get({controller:"products",action:"ChangeShowcaseImage",queryString:`imageId=${imageId}&productId=${productId}`})
     await firstValueFrom(changeShowcaseImageObservable);
     successCalback();
+  }
+
+  async updateStock(productId:string,stock:number,successCalback?:()=>void)
+  {
+   const observable:Observable<any> = this.httpClientService.put({controller:"products",action:"qrcode"}, {productId,stock});
+   await firstValueFrom(observable);
+   successCalback();
   }
 
 

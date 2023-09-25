@@ -4,6 +4,8 @@ import { CreateProduct } from 'src/app/contracts/product/create_product';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
+import { DialogService } from 'src/app/services/common/dialog.service';
+import { QrcodeReadingDialogComponent } from 'src/app/dialogs/qrcode-reading-dialog/qrcode-reading-dialog.component';
 
 @Component({
   selector: 'app-create',
@@ -12,7 +14,7 @@ import { AlertifyService, MessageType, Position } from 'src/app/services/admin/a
 })
 export class CreateComponent extends BaseComponent {
 
-  constructor(spinner:NgxSpinnerService, private productService:ProductService,private alertify:AlertifyService) {
+  constructor(spinner:NgxSpinnerService, private productService:ProductService,private alertify:AlertifyService,private dialogService:DialogService) {
     super(spinner);
    }
 
@@ -37,4 +39,19 @@ export class CreateComponent extends BaseComponent {
         this.alertify.message(message,{messageType:MessageType.Error,position:Position.TopRight});
     });
   }
+
+
+  readQr()
+  {
+    this.dialogService.openDialog({
+      componentType:QrcodeReadingDialogComponent,
+      options:{width:"700px",height:"600px"},
+      data:null,
+      afterClosed:()=>{
+
+      }
+    })
+  }
+
+
 }

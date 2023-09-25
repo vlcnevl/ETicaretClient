@@ -17,10 +17,14 @@ import { MatListModule } from '@angular/material/list';
 import AuthorizeMenuDialogComponent from './authorize-menu-dialog/authorize-menu-dialog.component';
 import { UpdateRoleDialogComponent } from './update-role-dialog/update-role-dialog.component';
 import { AuthorizeUserDialogComponent } from './authorize-user-dialog/authorize-user-dialog.component';
+import { QrCodeDialogComponent } from './qr-code-dialog/qr-code-dialog.component';
+import { QrcodeReadingDialogComponent } from './qrcode-reading-dialog/qrcode-reading-dialog.component';
+import { MatInputModule } from '@angular/material/input';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @NgModule({
-  declarations: [DeleteDialogComponent, SelectProductImageDialogComponent, BasketItemRemoveDialogComponent, CompleteOrderDialogComponent, OrderDetailDialogComponent, CompleteIncomingOrderDialogComponent, AuthorizeMenuDialogComponent, UpdateRoleDialogComponent, AuthorizeUserDialogComponent],
+  declarations: [DeleteDialogComponent, SelectProductImageDialogComponent, BasketItemRemoveDialogComponent, CompleteOrderDialogComponent, OrderDetailDialogComponent, CompleteIncomingOrderDialogComponent, AuthorizeMenuDialogComponent, UpdateRoleDialogComponent, AuthorizeUserDialogComponent, QrCodeDialogComponent, QrcodeReadingDialogComponent],
   imports: [
-    CommonModule,MatDialogModule,MatButtonModule,FileUploadModule,MatCardModule,MatTableModule,MatToolbarModule,MatListModule,MatBadgeModule]
+    CommonModule,MatDialogModule,MatButtonModule,FileUploadModule,MatCardModule,MatTableModule,MatToolbarModule,MatListModule,MatBadgeModule,MatInputModule,NgxScannerQrcodeModule]
 })
 export class DialogModule { }
